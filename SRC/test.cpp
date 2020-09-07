@@ -19,12 +19,16 @@ typedef struct SingleCost {  // 单个项目的价格
     int yuan;
     int jiao;
     int fen;
-    SingleCost *next;
 };
 
+typedef struct CheckInformation {  // 开药信息
+    int checkId;
+    SingleCost singleCost;
+    CheckInformation* next;
+};
 
 typedef struct CheckRecord {  // 检查记录
-    SingleCost *costHead;  // 头指针
+    CheckInformation* checkInformationHead;  // 头指针
     SingleCost totalCost;
 };
 
@@ -36,11 +40,11 @@ typedef struct DrugType {  // 药品类型
 typedef struct PrescribeInformation {  // 开药信息
     DrugType drugType;
     int drugNumber;
-    PrescribeInformation *next;
+    PrescribeInformation* next;
 };
 
 typedef struct PrescribeRecord {  // 开药类
-    PrescribeInformation *PrescribeInformationHead;
+    PrescribeInformation* prescribeInformationHead;  // 头指针
     SingleCost totalCost;
 };
 
@@ -59,17 +63,18 @@ typedef struct InHospitalRecord {  // 住院类
 typedef struct DiagnosisSituation {  // 诊疗情况
     int setFlag;
     union {  // 诊疗情况信息
-    CheckRecord checkRecord;
-    PrescribeRecord prescribeRecord;
-    InHospitalRecord inHospitalRecord;
+        CheckRecord checkRecord;
+        PrescribeRecord prescribeRecord;
+        InHospitalRecord inHospitalRecord;
     } diagnosisSituationInformation;
 };
 
 typedef struct DiagnosisRecord {  // 诊疗记录
+    TimeRecord recordTime;  // 记录时间
     PatientInformation patientInformation;  // 患者信息
     DoctorInformation doctorinformation;  // 医生信息
     DiagnosisSituation diagnosisSituation;  // 诊疗情况
-    DiagnosisRecord *next;
+    DiagnosisRecord* next;
 };
 
 #endif
