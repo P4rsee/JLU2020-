@@ -1,13 +1,13 @@
 #ifndef DIAGNOSISMESSAGE_H
 #define DIAGNOSISMESSAGE_H
 
-typedef struct PatientInformation {  // 患者信息
+typedef struct PatientInfo {  // 患者信息
     char name[20];  // 姓名
     int age;  // 年龄
     int registerId;  // 挂号(唯一)
 };
 
-typedef struct DoctorInformation {  // 医生信息
+typedef struct DoctorInfo {  // 医生信息
     char name[20];  // 姓名
     int level;  // 级别
     int section;  // 科室
@@ -21,26 +21,26 @@ typedef struct SingleCost {  // 单个项目的价格
     int fen;
 };
 
-typedef struct CheckInformation { // 开药信息
+typedef struct CheckInfo { // 开药信息
     int checkId;
     SingleCost singleCost;
-    CheckInformation* next;
+    CheckInfo* next;
 };
 
 typedef struct CheckRecord {  // 检查记录
-    CheckInformation* checkInformationHead;  // 头指针
+    CheckInfo* checkInformationHead;  // 头指针
     int typeNumber;
     SingleCost totalCost;   
 };
 
-typedef struct PrescribeInformation { // 开药信息
+typedef struct PrescribeInfo { // 开药信息
     int drugId;
     int drugNumber;
-    PrescribeInformation* next;
+    PrescribeInfo* next;
 };
 
 typedef struct PrescribeRecord {  // 开药类
-    PrescribeInformation* prescribeInformationHead; // 头指针
+    PrescribeInfo* prescribeInformationHead; // 头指针
     int typeNumber;
     SingleCost totalCost;
 };
@@ -64,13 +64,13 @@ typedef struct DiagnosisSituation {  // 诊疗情况
         CheckRecord checkRecord;
         PrescribeRecord prescribeRecord;
         InHospitalRecord inHospitalRecord;
-    } diagnosisSituationInformation;
+    } diagnosisSituationInfo;
 };
 
 typedef struct DiagnosisRecord {  // 诊疗记录
     TimeRecord recordTime; // 记录时间
-    PatientInformation patientInformation;  // 患者信息
-    DoctorInformation doctorinformation;  // 医生信息
+    PatientInfo patientInfo;  // 患者信息
+    DoctorInfo doctorinfo;  // 医生信息
     DiagnosisSituation diagnosisSituation;  // 诊疗情况
     DiagnosisRecord* next;
 };
