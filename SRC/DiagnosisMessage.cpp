@@ -5,14 +5,14 @@
 #include <malloc.h>
 #include <string.h>
 
-bool IsNumber(char* str) {  // 判断该字符串是否为数字
+bool IsNumber(char* str) { //判断该字符串是否为数字
     int len = strlen(str);
     for (int i = 0; i < len; i++)
         if (str[i] > '9' || str[i] < '0')return false;
     return true;
 }
 
-bool HasDate(int month, int day) {  // 判断月日的正确性
+bool HasDate(int month, int day) { // 判断月日的正确性
     static const int m_day[12] = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
     if (day > m_day[month] || day < 0)return false;
     return true;
@@ -251,10 +251,8 @@ void FileInput() {  // 从文件导入诊疗记录
         for (int i = 0; i < 7; i++)
             fprintf(fileWritePointer, "%d", nowRecord->doctorinfo.consultTime[i] ? 1 : 0); // 写入出诊时间的二进制码
         fprintf(fileWritePointer, " %d ", nowRecord->diagnosisSituation.setFlag); // 写入诊疗类型编号
-
         auto tempInfo = nowRecord->diagnosisSituation.diagnosisSituationInfo;  // 以下Info全用该变量代替 
-
-        if (nowRecord->diagnosisSituation.setFlag == 0) { // 检查类
+        if (nowRecord->diagnosisSituation.setFlag == 0) {  // 检查类
             CheckInfo* nowPos = tempInfo.checkRecord.checkInformationHead;
             fprintf(fileWritePointer, "%d %d %d %d",
                 tempInfo.checkRecord.totalCost.yuan,
