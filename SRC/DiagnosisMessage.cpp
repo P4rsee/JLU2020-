@@ -64,7 +64,7 @@ DiagnosisRecord* InRecord(FILE* fp) {  // 边输入边检查,若有数据错误�
     fscanf(fp, "%s", cache);
     if (IsEnd(cache)) { flag = 1; goto END; }
     if (!IsNumber(cache) || strlen(cache) != 4) flag = 1;  // 非数字或科室号不正确
-    else res->doctorinfo.section = atoi(cache);
+    else res->doctorinfo.sectionId = atoi(cache);
     // 检查医生姓名 类似患者姓名
     fscanf(fp, "%s", cache);
     if (IsEnd(cache)) { flag = 1; goto END; }
@@ -244,7 +244,7 @@ void FileInput() {  // 从文件导入诊疗记录
             nowRecord->patientInfo.name,
             nowRecord->patientInfo.age,
             nowRecord->doctorinfo.id,
-            nowRecord->doctorinfo.section,
+            nowRecord->doctorinfo.sectionId,
             nowRecord->doctorinfo.name,
             nowRecord->doctorinfo.level
         );
