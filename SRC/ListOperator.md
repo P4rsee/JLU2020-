@@ -37,3 +37,11 @@
 ### DiagnosisRecord* findModifiedNode(DiagnosisRecord* head,*int* registerId)
 
 ​	第一个参数是诊疗记录链表的头指针，第二个参数是患者ID。该函数查找患者ID为registerId的诊疗记录，找到后直接返回该结点的指针（可以直接从该指针对链表中的原结点进行修改）。
+
+### *void* pushbackWard(Ward* head,Ward* newWard)
+
+​			第一个参数是病房链表的头指针，第二个参数是要插入的新结点的指针，该函数读取newWard中的数据构造一个新结点，向链表最后插入新结点。
+
+### *bool* modifyWard(Ward *head, *int* wardId, Ward *newWard)
+
+​		第一个参数是病房链表的头指针，第二个参数是要修改的病房结点的Id，第三个参数是要修改为的新结点的指针。该函数把病房Id为wardId的病房数据修改为newWard中的数据，成功返回Ture,否则返回False。

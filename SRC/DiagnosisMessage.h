@@ -45,10 +45,11 @@ typedef struct DoctorInfo {  // 医生信息
     bool consultTime[7];  // 出诊时间
     int id;  // 工号(唯一)
     int doctorStatus; // 医生状态
+    bool inPostionStatus = 1;
 };
 
 DoctorInfo constructDoctorInfo(char name[20], int level,
-     int sectionId, bool consultTime[7], int id, int doctorStatus) {
+     int sectionId, bool consultTime[7], int id, int doctorStatus,bool inPositionStatus) {
     DoctorInfo doctorInfo;
     strcpy(doctorInfo.name,name);
     doctorInfo.level = level;
@@ -58,6 +59,7 @@ DoctorInfo constructDoctorInfo(char name[20], int level,
     }
     doctorInfo.id = id;
     doctorInfo.doctorStatus = doctorStatus;
+    doctorInfo.inPostionStatus = inPositionStatus;
     return doctorInfo;
 }
 
@@ -216,7 +218,28 @@ DiagnosisRecord constructDiagnosisRecord(TimeRecord recordTime, PatientInfo pati
     return diagnosisRecord;
 }
 
+typedef struct Ward {
+    int wardId;
+    int nursingType;
+    int bedType;
+    int totalBedNum;
+    int occupiedBedNum;
+    bool bedSituation[10];
+    Ward* next;
+};
 
+Ward constructWard(int wardId,int nursingType,int bedType,int totalBedNum,int occupiedBedNum,
+    bool bedSituation[10],Ward* next) {
+        Ward ward;
+        ward.wardId = wardId;
+        ward.nursingType = nursingType;
+        ward.bedType = bedType;
+        ward.totalBedNum = totalBedNum;
+        ward.occupiedBedNum = occupiedBedNum;
+        ward.next = next;
+        for (int i = 0;i < 10;i++)
+            ward.bedSituation[i] = bedSituation[i];
+}
 
 bool checkError(DiagnosisRecord); // 检查诊疗记录是否有错
 

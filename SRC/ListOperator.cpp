@@ -142,4 +142,25 @@ void showAllDiagnosisRecords(DiagnosisRecord* head) {
     }
 }
 
+void pushbackWard(Ward* head,Ward* newWard) {
+    Ward* tempPtr = head;
+    while(tempPtr->next != NULL) {
+        tempPtr = tempPtr->next;
+    }
+    Ward* ptr = (Ward*) malloc(sizeof(DiagnosisRecord));
+    *ptr = *newWard; 
+    ptr->next = NULL; 
+    tempPtr->next = ptr;
+}
+
+bool modifyWard(Ward *head, int wardId, Ward *newWard) {
+    Ward *ptr = head->next;
+    while(ptr->wardId != wardId)
+        ptr = ptr->next;
+    if (ptr == NULL)
+        return false;
+    *ptr = *newWard;
+    return true;
+}
+
 #endif
