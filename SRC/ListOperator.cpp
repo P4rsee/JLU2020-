@@ -88,7 +88,7 @@ DiagnosisRecord* queryDiagnosisBySectionId(DiagnosisRecord* head,int sectionId) 
     tempHead->next = NULL;
     DiagnosisRecord *tempPtr = head->next;
     while(tempPtr != NULL) {
-        if (tempPtr->doctorinfo.sectionId == sectionId) {
+        if (tempPtr->doctorInfo.sectionId == sectionId) {
             pushBackDiagnosisList(tempHead,tempPtr);
         }
         tempPtr = tempPtr->next;
@@ -101,7 +101,7 @@ DiagnosisRecord* queryDiagnosisByDoctorId(DiagnosisRecord* head, int doctorId) {
     tempHead->next = NULL;
     DiagnosisRecord *tempPtr = head;
     while(tempPtr != NULL) {
-        if (tempPtr->doctorinfo.id == doctorId) {
+        if (tempPtr->doctorInfo.id == doctorId) {
             pushBackDiagnosisList(tempHead,tempPtr);
         }
         tempPtr = tempPtr->next;
@@ -137,7 +137,7 @@ void showAllDiagnosisRecords(DiagnosisRecord* head) {
     DiagnosisRecord *tempPtr = head->next;
     while(tempPtr != NULL) {
         printf("患者ID:%d 医生ID:%d 科室ID:%d",tempPtr->patientInfo.registerId,
-        tempPtr->doctorinfo.id, tempPtr->doctorinfo.sectionId);
+        tempPtr->doctorInfo.id, tempPtr->doctorInfo.sectionId);
         tempPtr = tempPtr->next;
     }
 }
