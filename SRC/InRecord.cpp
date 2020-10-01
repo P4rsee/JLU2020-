@@ -51,10 +51,10 @@ int GetCheckInfo(FILE* fp, DiagnosisSituationUnion* tempInfo) {
         count = atoi(cache);
         tempInfo->checkRecord.typeNumber = count;
     }
-    if (tempInfo->checkRecord.checkInformationHead == NULL) {
-        tempInfo->checkRecord.checkInformationHead = (CheckInfo*)malloc(sizeof(CheckInfo));
+    if (tempInfo->checkRecord.checkInfoHead == NULL) {
+        tempInfo->checkRecord.checkInfoHead = (CheckInfo*)malloc(sizeof(CheckInfo));
     }
-    CheckInfo* nowCheck = tempInfo->checkRecord.checkInformationHead; // 当前位置指向头节点
+    CheckInfo* nowCheck = tempInfo->checkRecord.checkInfoHead; // 当前位置指向头节点
     nowCheck->next = NULL; nowCheck->checkId = 0; 
     nowCheck->singleCost.yuan = nowCheck->singleCost.jiao = nowCheck->singleCost.fen = 0;
     int totYuan = 0, totJiao = 0, totFen = 0;
@@ -121,11 +121,11 @@ int GetPrescribeInfo(FILE* fp, DiagnosisSituationUnion* tempInfo) {
         tempInfo->prescribeRecord.typeNumber = count;
     }
     // 当前位置指向头节点
-    if (tempInfo->prescribeRecord.prescribeInformationHead == NULL) {
-        tempInfo->prescribeRecord.prescribeInformationHead = 
+    if (tempInfo->prescribeRecord.prescribeInfoHead == NULL) {
+        tempInfo->prescribeRecord.prescribeInfoHead = 
             (PrescribeInfo*)malloc(sizeof(PrescribeInfo));
     }
-    PrescribeInfo* nowDrug = tempInfo->prescribeRecord.prescribeInformationHead;
+    PrescribeInfo* nowDrug = tempInfo->prescribeRecord.prescribeInfoHead;
     nowDrug->next = NULL; nowDrug->drugId = nowDrug->drugNumber = 0;
     for (int i = 0; i < count; i++) { // 每种药品
         PrescribeInfo* nextDrug = (PrescribeInfo*)malloc(sizeof(PrescribeInfo));  // 下一个节点
@@ -255,7 +255,7 @@ int GetDoctorRecord(FILE* fp, DiagnosisRecord* res) {
     fscanf(fp, "%s", cache);
     retInt = IsSection(cache);
     if (retInt == LEGAL_DATA) {
-        res->doctorInfo.section = atoi(cache); // 科室合法
+        res->doctorInfo.sectionId = atoi(cache); // 科室合法
     }
     else {
         flag = 1; if (retInt == FILE_END)return FILE_END;
@@ -295,19 +295,19 @@ DiagnosisRecord* InRecord(FILE* fp) {  // 边输入边检查
     int retInt = 0; // 记录每次检查的返回值边检查,若有数据错误返回NULL
     DiagnosisRecord* res = (DiagnosisRecord*)malloc(sizeof(DiagnosisRecord));
     res->diagnosisSituation.diagnosisSituationInfo.
-        checkRecord.checkInformationHead = NULL;
+        checkRecord.checkInfoHead = NULL;
     res->diagnosisSituation.diagnosisSituationInfo.
-        prescribeRecord.prescribeInformationHead = NULL;
+        prescribeRecord.prescribeInfoHead = NULL;
     fscanf(fp, "%s", cache);
     while (1) {
         // 检查日期是否正确
         fscanf(fp, "%s", cache);
         retInt = IsDate(cache);
         if (retInt == LEGAL_DATA) {  // 日期合法
-            SetDate(cache, &res->TimeRecord.month,
-                &res->TimeRecord.day,
-                &res->TimeRecord.hour,
-                &res->TimeRecord.minute);
+            SetDate(cache, &res->recordTime.month,
+                &res->recordTime.day,
+                &res->recordTime.hour,
+                &res->recordTime.minute);
         }
         else {
             flag = 1; if (retInt == FILE_END)break;
