@@ -1,5 +1,11 @@
 #ifndef DIAGNOSISMESSAGE_H
 #define DIAGNOSISMESSAGE_H
+
+#define FILE_END -1      //Êı¾İÄ©Î²Öµ";"
+#define INVALID_DATA 0   //²»ºÏ·¨Öµ
+#define LEGAL_DATA 1     //ºÏ·¨Öµ
+#define LACKED_DATA 2    //È±Ê¡ÖµÄ¬ÈÏchar*Îª"$",intÎª-1
+
 #include <string.h>
 #include <stdio.h>
 
@@ -7,13 +13,13 @@ typedef struct DiagnosisRecord;
 typedef struct DoctorInfo;
 
 
-typedef struct PatientInfo {  // æ‚£è€…ä¿¡æ¯
-    char name[20];  // å§“å
-    int age;  // å¹´é¾„
-    int registerId;  // æŒ‚å·(å”¯ä¸€)
+typedef struct PatientInfo {  // »¼ÕßĞÅÏ¢
+    char name[20];  // ĞÕÃû
+    int age;  // ÄêÁä
+    int registerId;  // ¹ÒºÅ(Î¨Ò»)
 };
 
-PatientInfo constructPatientInfo (char name[20], int age, int registerId) {
+PatientInfo constructPatientInfo(char name[20], int age, int registerId) {
     PatientInfo patientInfo;
     strcpy(patientInfo.name, name);
     patientInfo.age = age;
@@ -21,15 +27,15 @@ PatientInfo constructPatientInfo (char name[20], int age, int registerId) {
     return patientInfo;
 }
 
-typedef struct Section {  // ç§‘å®¤ç±»
-    int sectionId;  // ç§‘å®¤Id(å”¯ä¸€)
-    DiagnosisRecord* nowDiagnosis; // æ­£åœ¨è¯Šæ–­
-    DoctorInfo* DoctorsOfSectionHead; // ç§‘å®¤çš„åŒ»ç”Ÿï¼ˆæš‚å®šæœ€å¤š20ä¸ªï¼‰
+typedef struct Section {  // ¿ÆÊÒÀà
+    int sectionId;  // ¿ÆÊÒId(Î¨Ò»)
+    DiagnosisRecord* nowDiagnosis; // ÕıÔÚÕï¶Ï
+    DoctorInfo* DoctorsOfSectionHead; // ¿ÆÊÒµÄÒ½Éú£¨Ôİ¶¨×î¶à20¸ö£©
     Section* next;
 };
 
 Section constructSection(int sectionId, DiagnosisRecord* nowDiagnosis,
-            DoctorInfo* DoctorsOfSectionHead, Section* next) {
+    DoctorInfo* DoctorsOfSectionHead, Section* next) {
     Section section;
     section.sectionId = sectionId;
     section.nowDiagnosis = nowDiagnosis;
@@ -38,20 +44,20 @@ Section constructSection(int sectionId, DiagnosisRecord* nowDiagnosis,
     return section;
 };
 
-typedef struct DoctorInfo {  // åŒ»ç”Ÿä¿¡æ¯
-    char name[20];  // å§“å
-    int level;  // çº§åˆ«
-    int sectionId;  // æ‰€å±ç§‘å®¤ç¼–å·
-    bool consultTime[7];  // å‡ºè¯Šæ—¶é—´
-    int id;  // å·¥å·(å”¯ä¸€)
-    int doctorStatus; // åŒ»ç”ŸçŠ¶æ€
+typedef struct DoctorInfo {  // Ò½ÉúĞÅÏ¢
+    char name[20];  // ĞÕÃû
+    int level;  // ¼¶±ğ
+    int sectionId;  // ËùÊô¿ÆÊÒ±àºÅ
+    bool consultTime[7];  // ³öÕïÊ±¼ä
+    int id;  // ¹¤ºÅ(Î¨Ò»)
+    int doctorStatus; // Ò½Éú×´Ì¬
     bool inPostionStatus = 1;
 };
 
 DoctorInfo constructDoctorInfo(char name[20], int level,
-     int sectionId, bool consultTime[7], int id, int doctorStatus,bool inPositionStatus) {
+    int sectionId, bool consultTime[7], int id, int doctorStatus, bool inPositionStatus) {
     DoctorInfo doctorInfo;
-    strcpy(doctorInfo.name,name);
+    strcpy(doctorInfo.name, name);
     doctorInfo.level = level;
     doctorInfo.sectionId = sectionId;
     for (int i = 0; i < 7; i++) {
@@ -68,20 +74,20 @@ typedef struct DoctorNode {
     DoctorNode* next;
 };
 
-DoctorNode constructDoctorNode (DoctorInfo doctorInfo,DoctorNode* next) {
+DoctorNode constructDoctorNode(DoctorInfo doctorInfo, DoctorNode* next) {
     DoctorNode doctorNode;
     doctorNode.doctorInfo = doctorInfo;
     doctorNode.next = next;
     return doctorNode;
 }
 
-typedef struct SingleCost {  // å•ä¸ªé¡¹ç›®çš„ä»·æ ¼
+typedef struct SingleCost {  // µ¥¸öÏîÄ¿µÄ¼Û¸ñ
     int yuan;
     int jiao;
     int fen;
 };
 
-SingleCost constructSingleCost (int yuan, int jiao, int fen) {
+SingleCost constructSingleCost(int yuan, int jiao, int fen) {
     SingleCost singleCost;
     singleCost.yuan = yuan;
     singleCost.jiao = jiao;
@@ -89,27 +95,27 @@ SingleCost constructSingleCost (int yuan, int jiao, int fen) {
     return singleCost;
 }
 
-typedef struct CheckInfo { // æ£€æŸ¥ä¿¡æ¯
+typedef struct CheckInfo { // ¼ì²éĞÅÏ¢
     int checkId;
     SingleCost singleCost;
     CheckInfo* next;
 };
 
-CheckInfo constructCheckInfo(int checkId, SingleCost singleCost, CheckInfo *next) {
+CheckInfo constructCheckInfo(int checkId, SingleCost singleCost, CheckInfo* next) {
     CheckInfo checkInfo;
     checkInfo.singleCost = singleCost;
     checkInfo.next = next;
     return checkInfo;
 }
 
-typedef struct CheckRecord {  // æ£€æŸ¥è®°å½•
-    CheckInfo* checkInfoHead;  // å¤´æŒ‡é’ˆ
+typedef struct CheckRecord {  // ¼ì²é¼ÇÂ¼
+    CheckInfo* checkInfoHead;  // Í·Ö¸Õë
     int typeNumber;
-    SingleCost totalCost;   
+    SingleCost totalCost;
 };
 
 CheckRecord constructCheckRecord(CheckInfo* checkInfoHead,
- int typeNumber, SingleCost totalCost) {
+    int typeNumber, SingleCost totalCost) {
     CheckRecord checkRecord;
     checkRecord.checkInfoHead = checkInfoHead;
     checkRecord.typeNumber = typeNumber;
@@ -131,13 +137,13 @@ PrescribeInfo constructPrescribeInfo(int drugId, int drugNumber, PrescribeInfo* 
     return prescribeInfo;
 }
 
-typedef struct PrescribeRecord {  // å¼€è¯ç±»
-    PrescribeInfo* prescribeInfoHead; // å¤´æŒ‡é’ˆ
+typedef struct PrescribeRecord {  // ¿ªÒ©Àà
+    PrescribeInfo* prescribeInfoHead; // Í·Ö¸Õë
     int typeNumber;
     SingleCost totalCost;
 };
 
-PrescribeRecord constructPrescribeRecord (PrescribeInfo* prescribeInfoHead,
+PrescribeRecord constructPrescribeRecord(PrescribeInfo* prescribeInfoHead,
     int typeNumber, SingleCost totalCost) {
     PrescribeRecord prescribeRecord;
     prescribeRecord.totalCost = totalCost;
@@ -146,14 +152,14 @@ PrescribeRecord constructPrescribeRecord (PrescribeInfo* prescribeInfoHead,
     return prescribeRecord;
 }
 
-typedef struct TimeRecord {  // æ—¥æœŸ
+typedef struct TimeRecord {  // ÈÕÆÚ
     int month;
     int day;
     int hour;
     int minute;
 };
 
-TimeRecord constructTimeRecord(int month, int day, int hour,int minute) {
+TimeRecord constructTimeRecord(int month, int day, int hour, int minute) {
     TimeRecord timeRecord;
     timeRecord.month = month;
     timeRecord.day = day;
@@ -162,7 +168,7 @@ TimeRecord constructTimeRecord(int month, int day, int hour,int minute) {
     return timeRecord;
 }
 
-typedef struct InHospitalRecord {  // ä½é™¢ç±»
+typedef struct InHospitalRecord {  // ×¡ÔºÀà
     TimeRecord hospitalizedDate;
     TimeRecord predictedLeaveDate;
     SingleCost deposit;
@@ -170,7 +176,7 @@ typedef struct InHospitalRecord {  // ä½é™¢ç±»
 };
 
 InHospitalRecord constructInHospitalRecord(TimeRecord hospitalizedDate,
-        TimeRecord predictedLeaveDate, SingleCost deposit, int spendDay) {
+    TimeRecord predictedLeaveDate, SingleCost deposit, int spendDay) {
     InHospitalRecord inHospitalRecord;
     inHospitalRecord.hospitalizedDate = hospitalizedDate;
     inHospitalRecord.predictedLeaveDate = predictedLeaveDate;
@@ -179,36 +185,36 @@ InHospitalRecord constructInHospitalRecord(TimeRecord hospitalizedDate,
     return inHospitalRecord;
 }
 
-typedef union DiagnosisSituationUnion {  // è¯Šç–—æƒ…å†µä¿¡æ¯
-        CheckRecord checkRecord;
-        PrescribeRecord prescribeRecord;
-        InHospitalRecord inHospitalRecord;
+typedef union DiagnosisSituationUnion {  // ÕïÁÆÇé¿öĞÅÏ¢
+    CheckRecord checkRecord;
+    PrescribeRecord prescribeRecord;
+    InHospitalRecord inHospitalRecord;
 };
 
-typedef struct DiagnosisSituation {  // è¯Šç–—æƒ…å†µ
+typedef struct DiagnosisSituation {  // ÕïÁÆÇé¿ö
     int setFlag;
     DiagnosisSituationUnion diagnosisSituationInfo;
 };
 
 DiagnosisSituation constructDiagnosisSituation(int setFlag,
-        DiagnosisSituationUnion diagnosisSituationInfo) {
+    DiagnosisSituationUnion diagnosisSituationInfo) {
     DiagnosisSituation diagnosisSituation;
     diagnosisSituation.setFlag = setFlag;
     diagnosisSituation.diagnosisSituationInfo = diagnosisSituationInfo;
     return diagnosisSituation;
 }
 
-typedef struct DiagnosisRecord {  // è¯Šç–—è®°å½•
-    TimeRecord recordTime; // è®°å½•æ—¶é—´
-    PatientInfo patientInfo;  // æ‚£è€…ä¿¡æ¯
-    DoctorInfo doctorinfo;  // åŒ»ç”Ÿä¿¡æ¯
-    DiagnosisSituation diagnosisSituation;  // è¯Šç–—æƒ…å†µ
+typedef struct DiagnosisRecord {  // ÕïÁÆ¼ÇÂ¼
+    TimeRecord recordTime; // ¼ÇÂ¼Ê±¼ä
+    PatientInfo patientInfo;  // »¼ÕßĞÅÏ¢
+    DoctorInfo doctorinfo;  // Ò½ÉúĞÅÏ¢
+    DiagnosisSituation diagnosisSituation;  // ÕïÁÆÇé¿ö
     DiagnosisRecord* next;
 };
 
-DiagnosisRecord constructDiagnosisRecord(TimeRecord recordTime, PatientInfo patientInfo, 
-        DoctorInfo doctorInfo, DiagnosisSituation diagnosisSituation,
-        DiagnosisRecord *next) {
+DiagnosisRecord constructDiagnosisRecord(TimeRecord recordTime, PatientInfo patientInfo,
+    DoctorInfo doctorInfo, DiagnosisSituation diagnosisSituation,
+    DiagnosisRecord* next) {
     DiagnosisRecord diagnosisRecord;
     diagnosisRecord.recordTime = recordTime;
     diagnosisRecord.patientInfo = patientInfo;
@@ -228,32 +234,32 @@ typedef struct Ward {
     Ward* next;
 };
 
-Ward constructWard(int wardId,int nursingType,int bedType,int totalBedNum,int occupiedBedNum,
-    bool bedSituation[10],Ward* next) {
-        Ward ward;
-        ward.wardId = wardId;
-        ward.nursingType = nursingType;
-        ward.bedType = bedType;
-        ward.totalBedNum = totalBedNum;
-        ward.occupiedBedNum = occupiedBedNum;
-        ward.next = next;
-        for (int i = 0;i < 10;i++)
-            ward.bedSituation[i] = bedSituation[i];
+Ward constructWard(int wardId, int nursingType, int bedType, int totalBedNum, int occupiedBedNum,
+    bool bedSituation[10], Ward* next) {
+    Ward ward;
+    ward.wardId = wardId;
+    ward.nursingType = nursingType;
+    ward.bedType = bedType;
+    ward.totalBedNum = totalBedNum;
+    ward.occupiedBedNum = occupiedBedNum;
+    ward.next = next;
+    for (int i = 0; i < 10; i++)
+        ward.bedSituation[i] = bedSituation[i];
 }
 
-bool checkError(DiagnosisRecord); // æ£€æŸ¥è¯Šç–—è®°å½•æ˜¯å¦æœ‰é”™
+bool checkError(DiagnosisRecord); // ¼ì²éÕïÁÆ¼ÇÂ¼ÊÇ·ñÓĞ´í
 
-void FileInput(); // ä»æ–‡ä»¶å¯¼å…¥è¯Šç–—è®°å½•
+void FileInput(); // ´ÓÎÄ¼şµ¼ÈëÕïÁÆ¼ÇÂ¼
 
-SingleCost add (SingleCost costA, SingleCost costB) {
+SingleCost add(SingleCost costA, SingleCost costB) {
     costA.fen += costB.fen;
     costA.jiao += costB.jiao;
     costA.yuan += costB.yuan;
-    while(costA.fen >= 100) {
+    while (costA.fen >= 100) {
         costA.fen -= 100;
         costA.jiao++;
     }
-    while(costA.jiao >= 100) {
+    while (costA.jiao >= 100) {
         costA.jiao -= 100;
         costA.yuan++;
     }
