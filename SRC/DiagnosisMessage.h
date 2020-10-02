@@ -1,82 +1,160 @@
-#ifndef DIAGNOSISMESSAGE_H
-#define DIAGNOSISMESSAGE_H
+#pragma once
 
-typedef struct PatientInfo {  // æ‚£è€…ä¿¡æ¯
-    char name[20];  // å§“å
-    int age;  // å¹´é¾„
-    int registerId;  // æŒ‚å·(å”¯ä¸€)
+#define FILE_END -1      //Êı¾İÄ©Î²Öµ";"
+#define INVALID_DATA 0   //²»ºÏ·¨Öµ
+#define LEGAL_DATA 1     //ºÏ·¨Öµ
+#define LACKED_DATA 2    //È±Ê¡ÖµÄ¬ÈÏchar*Îª"$",intÎª-1
+
+#include <string.h>
+#include <stdio.h>
+
+typedef struct DiagnosisRecord;
+typedef struct DoctorInfo;
+
+
+typedef struct PatientInfo {  // »¼ÕßĞÅÏ¢
+    char name[20];  // ĞÕÃû
+    int age;  // ÄêÁä
+    int registerId;  // ¹ÒºÅ(Î¨Ò»)
 };
 
-typedef struct DoctorInfo {  // åŒ»ç”Ÿä¿¡æ¯
-    char name[20];  // å§“å
-    int level;  // çº§åˆ«
-    int section;  // ç§‘å®¤
-    bool consultTime[7];  // å‡ºè¯Šæ—¶é—´
-    int id;  // å·¥å·(å”¯ä¸€)
+PatientInfo constructPatientInfo(char name[20], int age, int registerId);
+
+typedef struct Section {  // ¿ÆÊÒÀà
+    int sectionId;  // ¿ÆÊÒId(Î¨Ò»)
+    DiagnosisRecord* nowDiagnosis; // ÕıÔÚÕï¶Ï
+    DoctorInfo* DoctorsOfSectionHead; // ¿ÆÊÒµÄÒ½Éú£¨Ôİ¶¨×î¶à20¸ö£©
+    Section* next;
 };
 
-typedef struct SingleCost {  // å•ä¸ªé¡¹ç›®çš„ä»·æ ¼
+Section constructSection(int sectionId, DiagnosisRecord* nowDiagnosis,
+    DoctorInfo* DoctorsOfSectionHead, Section* next);
+
+typedef struct DoctorInfo {  // Ò½ÉúĞÅÏ¢
+    char name[20];  // ĞÕÃû
+    int level;  // ¼¶±ğ
+    int sectionId;  // ËùÊô¿ÆÊÒ±àºÅ
+    bool consultTime[7];  // ³öÕïÊ±¼ä
+    int id;  // ¹¤ºÅ(Î¨Ò»)
+    int doctorStatus; // Ò½Éú×´Ì¬
+    bool inPostionStatus = 1;
+    int busyDegree;
+};
+
+DoctorInfo constructDoctorInfo(char name[20], int level,
+    int sectionId, bool consultTime[7], int id, int doctorStatus, bool inPositionStatus, int busyDegree);
+
+typedef struct DoctorNode {
+    DoctorInfo doctorInfo;
+    DoctorNode* next;
+};
+
+DoctorNode constructDoctorNode(DoctorInfo doctorInfo, DoctorNode* next);
+
+typedef struct SingleCost {  // µ¥¸öÏîÄ¿µÄ¼Û¸ñ
     int yuan;
     int jiao;
     int fen;
 };
 
-typedef struct CheckInfo { // å¼€è¯ä¿¡æ¯
+SingleCost constructSingleCost(int yuan, int jiao, int fen);
+
+typedef struct CheckInfo { // ¼ì²éĞÅÏ¢
     int checkId;
     SingleCost singleCost;
     CheckInfo* next;
 };
 
-typedef struct CheckRecord {  // æ£€æŸ¥è®°å½•
-    CheckInfo* checkInformationHead;  // å¤´æŒ‡é’ˆ
+CheckInfo constructCheckInfo(int checkId, SingleCost singleCost, CheckInfo* next);
+
+typedef struct CheckRecord {  // ¼ì²é¼ÇÂ¼
+    CheckInfo* checkInfoHead;  // Í·Ö¸Õë
     int typeNumber;
-    SingleCost totalCost;   
+    SingleCost totalCost;
 };
 
-typedef struct PrescribeInfo { // å¼€è¯ä¿¡æ¯
+CheckRecord constructCheckRecord(CheckInfo* checkInfoHead,
+    int typeNumber, SingleCost totalCost);
+
+typedef struct PrescribeInfo {
     int drugId;
     int drugNumber;
     PrescribeInfo* next;
 };
 
-typedef struct PrescribeRecord {  // å¼€è¯ç±»
-    PrescribeInfo* prescribeInformationHead; // å¤´æŒ‡é’ˆ
+PrescribeInfo constructPrescribeInfo(int drugId, int drugNumber, PrescribeInfo* next);
+
+typedef struct PrescribeRecord {  // ¿ªÒ©Àà
+    PrescribeInfo* prescribeInfoHead; // Í·Ö¸Õë
     int typeNumber;
     SingleCost totalCost;
 };
 
-typedef struct TimeRecord {  // æ—¥æœŸ
+PrescribeRecord constructPrescribeRecord(PrescribeInfo* prescribeInfoHead,
+    int typeNumber, SingleCost totalCost);
+
+typedef struct TimeRecord {  // ÈÕÆÚ
     int month;
     int day;
     int hour;
     int minute;
 };
 
-typedef struct InHospitalRecord {  // ä½é™¢ç±»
+TimeRecord constructTimeRecord(int month, int day, int hour, int minute);
+
+typedef struct InHospitalRecord {  // ×¡ÔºÀà
     TimeRecord hospitalizedDate;
     TimeRecord predictedLeaveDate;
-    SingleCost deposit;
+    TimeRecord leaveDate;
+    int sickBedNumber; // ´²Î»ºÅ
+    SingleCost deposit; // Ñº½ğÎª100µÄÕûÊı
+    SingleCost costByNow;  // µ±Ç°»¨·Ñ£¬ÈôÒÑ³öÔºÔòÎª×¡Ôº×Ü¿ªÏú
 };
 
-typedef struct DiagnosisSituation {  // è¯Šç–—æƒ…å†µ
+InHospitalRecord constructInHospitalRecord(TimeRecord hospitalizedDate, TimeRecord predictedLeaveDate,
+  TimeRecord leaveDate,int sickBedNumber, SingleCost deposit, SingleCost costByNow);
+
+typedef union DiagnosisSituationUnion {  // ÕïÁÆÇé¿öĞÅÏ¢
+    CheckRecord checkRecord;
+    PrescribeRecord prescribeRecord;
+    InHospitalRecord inHospitalRecord;
+};
+
+typedef struct DiagnosisSituation {  // ÕïÁÆÇé¿ö
     int setFlag;
-    union {  // è¯Šç–—æƒ…å†µä¿¡æ¯
-        CheckRecord checkRecord;
-        PrescribeRecord prescribeRecord;
-        InHospitalRecord inHospitalRecord;
-    } diagnosisSituationInfo;
+    DiagnosisSituationUnion diagnosisSituationInfo;
 };
 
-typedef struct DiagnosisRecord {  // è¯Šç–—è®°å½•
-    TimeRecord recordTime; // è®°å½•æ—¶é—´
-    PatientInfo patientInfo;  // æ‚£è€…ä¿¡æ¯
-    DoctorInfo doctorinfo;  // åŒ»ç”Ÿä¿¡æ¯
-    DiagnosisSituation diagnosisSituation;  // è¯Šç–—æƒ…å†µ
+DiagnosisSituation constructDiagnosisSituation(int setFlag,
+    DiagnosisSituationUnion diagnosisSituationInfo);
+
+typedef struct DiagnosisRecord {  // ÕïÁÆ¼ÇÂ¼
+    TimeRecord recordTime; // ¼ÇÂ¼Ê±¼ä
+    PatientInfo patientInfo;  // »¼ÕßĞÅÏ¢
+    DoctorInfo doctorInfo;  // Ò½ÉúĞÅÏ¢
+    DiagnosisSituation diagnosisSituation;  // ÕïÁÆÇé¿ö
     DiagnosisRecord* next;
 };
 
-bool checkError(DiagnosisRecord); // æ£€æŸ¥è¯Šç–—è®°å½•æ˜¯å¦æœ‰é”™
+DiagnosisRecord constructDiagnosisRecord(TimeRecord recordTime, PatientInfo patientInfo,
+    DoctorInfo doctorInfo, DiagnosisSituation diagnosisSituation,
+    DiagnosisRecord* next);
 
-void FileInput(); // ä»æ–‡ä»¶å¯¼å…¥è¯Šç–—è®°å½•
+typedef struct Ward {
+    int wardId;
+    int nursingType;
+    int bedType;
+    int totalBedNum;
+    int occupiedBedNum;
+    bool bedSituation[10];
+    Ward* next;
+};
 
-#endif
+Ward constructWard(int wardId, int nursingType, int bedType, int totalBedNum, int occupiedBedNum,
+    bool bedSituation[10], Ward* next);
+
+bool checkError(DiagnosisRecord); // ¼ì²éÕïÁÆ¼ÇÂ¼ÊÇ·ñÓĞ´í
+
+void FileInput(); // ´ÓÎÄ¼şµ¼ÈëÕïÁÆ¼ÇÂ¼
+
+SingleCost add(SingleCost costA, SingleCost costB);
