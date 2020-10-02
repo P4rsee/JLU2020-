@@ -26,11 +26,12 @@ Section constructSection(int sectionId, DiagnosisRecord* nowDiagnosis,
 
 
 DoctorInfo constructDoctorInfo(char name[20], int level,
-    int sectionId, bool consultTime[7], int id, int doctorStatus, bool inPositionStatus) {
+    int sectionId, bool consultTime[7], int id, int doctorStatus, bool inPositionStatus,int busyDegree) {
     DoctorInfo doctorInfo;
     strcpy(doctorInfo.name, name);
     doctorInfo.level = level;
     doctorInfo.sectionId = sectionId;
+    doctorInfo.busyDegree = busyDegree;
     for (int i = 0; i < 7; i++) {
         doctorInfo.consultTime[i] = consultTime[i];
     }
@@ -104,13 +105,15 @@ TimeRecord constructTimeRecord(int month, int day, int hour, int minute) {
     return timeRecord;
 }
 
-InHospitalRecord constructInHospitalRecord(TimeRecord hospitalizedDate,
-    TimeRecord predictedLeaveDate, SingleCost deposit, int spendDay) {
+InHospitalRecord constructInHospitalRecord(TimeRecord hospitalizedDate, TimeRecord predictedLeaveDate,
+  TimeRecord leaveDate,int sickBedNumber, SingleCost deposit, SingleCost costByNow) {
     InHospitalRecord inHospitalRecord;
     inHospitalRecord.hospitalizedDate = hospitalizedDate;
     inHospitalRecord.predictedLeaveDate = predictedLeaveDate;
     inHospitalRecord.deposit = deposit;
-    inHospitalRecord.spendDay = spendDay;
+    inHospitalRecord.leaveDate = leaveDate;
+    inHospitalRecord.sickBedNumber = sickBedNumber;
+    inHospitalRecord.costByNow = costByNow;
     return inHospitalRecord;
 }
 

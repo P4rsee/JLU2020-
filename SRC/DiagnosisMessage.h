@@ -38,10 +38,11 @@ typedef struct DoctorInfo {  // 医生信息
     int id;  // 工号(唯一)
     int doctorStatus; // 医生状态
     bool inPostionStatus = 1;
+    int busyDegree;
 };
 
 DoctorInfo constructDoctorInfo(char name[20], int level,
-    int sectionId, bool consultTime[7], int id, int doctorStatus, bool inPositionStatus);
+    int sectionId, bool consultTime[7], int id, int doctorStatus, bool inPositionStatus, int busyDegree);
 
 typedef struct DoctorNode {
     DoctorInfo doctorInfo;
@@ -104,12 +105,14 @@ TimeRecord constructTimeRecord(int month, int day, int hour, int minute);
 typedef struct InHospitalRecord {  // 住院类
     TimeRecord hospitalizedDate;
     TimeRecord predictedLeaveDate;
-    SingleCost deposit;
-    int spendDay;
+    TimeRecord leaveDate;
+    int sickBedNumber; // 床位号
+    SingleCost deposit; // 押金为100的整数
+    SingleCost costByNow;  // 当前花费，若已出院则为住院总开销
 };
 
-InHospitalRecord constructInHospitalRecord(TimeRecord hospitalizedDate,
-    TimeRecord predictedLeaveDate, SingleCost deposit, int spendDay);
+InHospitalRecord constructInHospitalRecord(TimeRecord hospitalizedDate, TimeRecord predictedLeaveDate,
+  TimeRecord leaveDate,int sickBedNumber, SingleCost deposit, SingleCost costByNow);
 
 typedef union DiagnosisSituationUnion {  // 诊疗情况信息
     CheckRecord checkRecord;
