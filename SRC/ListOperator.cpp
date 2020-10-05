@@ -1,9 +1,4 @@
-#ifndef LISTOPERATOR_H
-#define LISTOPERATOR_H
-
-#include "DiagnosisMessage.h"
-#include <stdlib.h>
-#include <stdio.h>
+#include "ListOperator.h"
 
 void pushBackDiagnosisList(DiagnosisRecord *head, DiagnosisRecord* newRecord) {
     DiagnosisRecord *tempPtr = head;
@@ -11,8 +6,8 @@ void pushBackDiagnosisList(DiagnosisRecord *head, DiagnosisRecord* newRecord) {
         tempPtr = tempPtr->next;
     }
     DiagnosisRecord* ptr = (DiagnosisRecord*) malloc(sizeof(DiagnosisRecord));
-    *ptr = *newRecord; 
-    ptr->next = NULL; 
+    *ptr = *newRecord;
+    ptr->next = NULL;
     tempPtr->next = ptr;
 }
 
@@ -25,7 +20,7 @@ void freeDiagnosisRecord(DiagnosisRecord* tempRecord) {
             CheckInfo *nextPtr = tempPtr->next;
             free(tempPtr);
             tempPtr = nextPtr;
-        }    
+        }
     } else if (flag == 1) {
         PrescribeInfo* tempPtr = tempRecord->diagnosisSituation.
         diagnosisSituationInfo.prescribeRecord.prescribeInfoHead;
@@ -59,7 +54,7 @@ void pushBackCheckList(CheckInfo* head,CheckInfo * newCheck) {
     }
     CheckInfo *ptr = (CheckInfo*) malloc(sizeof(CheckInfo));
     *ptr = *newCheck;
-    ptr->next = NULL; 
+    ptr->next = NULL;
     tempPtr->next = ptr;
 }
 
@@ -69,6 +64,7 @@ void pushBackPrescribeList(PrescribeInfo* head, PrescribeInfo  *newPrescribe) {
         tempPtr = tempPtr->next;
     }
     PrescribeInfo* ptr = (PrescribeInfo*) malloc(sizeof(PrescribeInfo));
+    *ptr = *newPrescribe;
     ptr->next = NULL;
     tempPtr->next = ptr;
 }
@@ -79,6 +75,7 @@ void pushBackDoctorList(DoctorNode* head, DoctorNode *newDoctorNode) {
         tempPtr = tempPtr->next;
     }
     DoctorNode* ptr = (DoctorNode*) malloc(sizeof(DoctorNode));
+    *ptr = *newDoctorNode;
     ptr->next = NULL;
     tempPtr->next = ptr;
 }
@@ -122,6 +119,19 @@ DiagnosisRecord* queryDiagnosisByRegisterId(DiagnosisRecord* head,int registerId
     return resPtr;
 }
 
+DoctorNode* queryDoctorBySectionId(DoctorNode* head,int sectionId) {
+    DoctorNode* tempHead = (DoctorNode*) malloc(sizeof(DoctorNode));
+    tempHead->next = NULL;
+    DoctorNode* tempPtr = head;
+    while(tempPtr != NULL) {
+        if (tempPtr->doctorInfo.sectionId == sectionId) {
+            pushBackDoctorList(tempHead,tempPtr);
+        }
+        tempPtr = tempPtr->next;
+    }
+    return tempHead;
+}
+
 DiagnosisRecord* findModifiedNode(DiagnosisRecord* head,int registerId) {
     DiagnosisRecord *tempPtr = head->next;
     while(tempPtr != NULL) {
@@ -148,8 +158,8 @@ void pushbackWard(Ward* head,Ward* newWard) {
         tempPtr = tempPtr->next;
     }
     Ward* ptr = (Ward*) malloc(sizeof(DiagnosisRecord));
-    *ptr = *newWard; 
-    ptr->next = NULL; 
+    *ptr = *newWard;
+    ptr->next = NULL;
     tempPtr->next = ptr;
 }
 
@@ -162,5 +172,3 @@ bool modifyWard(Ward *head, int wardId, Ward *newWard) {
     *ptr = *newWard;
     return true;
 }
-
-#endif

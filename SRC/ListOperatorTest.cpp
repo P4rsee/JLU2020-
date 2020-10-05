@@ -1,13 +1,14 @@
 /*
-#include "ListOperator.cpp"
+#include "ListOperator.h"
+#include "DiagnosisMessage.h"
 #include <stdio.h>
 
 int main() {
-
+    system("chcp 65001");
     TimeRecord tempTimeRecord = constructTimeRecord(2,2,2,2);
     PatientInfo tempPatientInfo = constructPatientInfo("TK-WANG",24,1);
     bool constructId[7] = {0,0,1,1,1,0,1};
-    DoctorInfo  tempDoctorInfo = constructDoctorInfo("ss",2,1,constructId,1,1);
+    DoctorInfo  tempDoctorInfo = constructDoctorInfo("ss",2,1,constructId,1,1,1);
     SingleCost tempSingleCost = constructSingleCost(1,1,1);
     CheckRecord tempCheckRecord = constructCheckRecord(0,1,tempSingleCost);
     DiagnosisSituationUnion tempUnion;
@@ -25,13 +26,13 @@ int main() {
     printf("%d\n",head->next->patientInfo.registerId);
     *RecordPtr = RecordB;
     pushBackDiagnosisList(head,RecordPtr);
-    printf("娣诲姞涓や釜鐐瑰悗\n");
-    printf("绗竴涓偣鐨処D:%d 绗簩涓偣鐨処D:%d\n",queryDiagnosisByRegisterId(head,1)->patientInfo.registerId,head->next->next->patientInfo.registerId);
+    printf("添加两个点后\n");
+    printf("第一个点的ID:%d 第二个点的ID:%d\n",queryDiagnosisByRegisterId(head,1)->patientInfo.registerId,head->next->next->patientInfo.registerId);
     DiagnosisRecord* sectionQuerytest = queryDiagnosisBySectionId(head,1);
-    printf("浠ョ瀹ゅ彿鏌ヨ\n");
+    printf("以科室号查询\n");
     showAllDiagnosisRecords(sectionQuerytest);
     deleteDiagnosisList(head,1);
-    printf("鍒犻櫎绗竴涓偣鍚嶾n绗竴涓偣鐨処D:%d\n",head->next->patientInfo.registerId);
+    printf("删除第一个点后\n第一个点的ID:%d\n",head->next->patientInfo.registerId);
     return 0;
 }
 */

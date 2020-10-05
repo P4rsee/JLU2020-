@@ -36,13 +36,12 @@ typedef struct DoctorInfo {  // 医生信息
     int sectionId;  // 所属科室编号
     bool consultTime[7];  // 出诊时间
     int id;  // 工号(唯一)
-    int doctorStatus; // 医生状态
-    bool inPostionStatus = 1;
-    int busyDegree;
+    bool doctorStatus; // 医生状态
+    int busyDegree; //繁忙程度
 };
 
 DoctorInfo constructDoctorInfo(char name[20], int level,
-    int sectionId, bool consultTime[7], int id, int doctorStatus, bool inPositionStatus, int busyDegree);
+    int sectionId, bool consultTime[7], int id, bool doctorStatus, int busyDegree);
 
 typedef struct DoctorNode {
     DoctorInfo doctorInfo;
@@ -58,6 +57,8 @@ typedef struct SingleCost {  // 单个项目的价格
 };
 
 SingleCost constructSingleCost(int yuan, int jiao, int fen);
+
+SingleCost constructSingleCost(char *);
 
 typedef struct CheckInfo { // 检查信息
     int checkId;
@@ -140,6 +141,8 @@ DiagnosisRecord constructDiagnosisRecord(TimeRecord recordTime, PatientInfo pati
     DoctorInfo doctorInfo, DiagnosisSituation diagnosisSituation,
     DiagnosisRecord* next);
 
+DiagnosisRecord* initDiagnosisRecord();
+
 typedef struct Ward {
     int wardId;
     int nursingType;
@@ -157,4 +160,4 @@ bool checkError(DiagnosisRecord); // 检查诊疗记录是否有错
 
 void FileInput(); // 从文件导入诊疗记录
 
-SingleCost add(SingleCost costA, SingleCost costB);
+SingleCost costAdd(SingleCost costA, SingleCost costB);

@@ -26,7 +26,7 @@ Section constructSection(int sectionId, DiagnosisRecord* nowDiagnosis,
 
 
 DoctorInfo constructDoctorInfo(char name[20], int level,
-    int sectionId, bool consultTime[7], int id, int doctorStatus, bool inPositionStatus,int busyDegree) {
+    int sectionId, bool consultTime[7], int id, bool doctorStatus,int busyDegree) {
     DoctorInfo doctorInfo;
     strcpy(doctorInfo.name, name);
     doctorInfo.level = level;
@@ -37,7 +37,6 @@ DoctorInfo constructDoctorInfo(char name[20], int level,
     }
     doctorInfo.id = id;
     doctorInfo.doctorStatus = doctorStatus;
-    doctorInfo.inPostionStatus = inPositionStatus;
     return doctorInfo;
 }
 
@@ -58,6 +57,19 @@ SingleCost constructSingleCost(int yuan, int jiao, int fen) {
     return singleCost;
 }
 
+SingleCost constrcutSingleCost(char *costStr) {
+    SingleCost singleCost;
+    singleCost.yuan = 0;
+    int position = 0;
+    while(costStr[position] != '.')
+        position++;
+    for (int i = 0;i < position;i++) {
+        singleCost.yuan = singleCost.yuan * 10 + (costStr[i] - '0');
+    }
+    singleCost.jiao = costStr[position + 1] - '0';
+    singleCost.fen = costStr[position + 2] - '0';
+    return singleCost;
+}
 
 CheckInfo constructCheckInfo(int checkId, SingleCost singleCost, CheckInfo* next) {
     CheckInfo checkInfo;
@@ -138,6 +150,19 @@ DiagnosisRecord constructDiagnosisRecord(TimeRecord recordTime, PatientInfo pati
     return diagnosisRecord;
 }
 
+DiagnosisRecord* initDiagnosisRecord() {
+    DiagnosisRecord* DiagnosisRecordPtr = (DiagnosisRecord*) malloc(sizeof(DiagnosisRecord));
+    DiagnosisRecordPtr->next = NULL;
+    DiagnosisRecordPtr->patientInfo = constructPatientInfo("$", -1, -1);
+    bool initConsultTime[] = {0,0,0,0,0,0,0};
+    DiagnosisRecordPtr->doctorInfo = constructDoctorInfo("$", -1, -1,initConsultTime,-1, 0, -1);
+    DiagnosisRecordPtr->recordTime = constructTimeRecord(-1,-1,-1,-1);
+    DiagnosisSituationUnion tempUnion;
+    tempUnion.checkRecord = constructCheckRecord(NULL,-1,constructSingleCost(-1, -1, -1));
+    DiagnosisRecordPtr->diagnosisSituation = constructDiagnosisSituation(-1,tempUnion);
+    return DiagnosisRecordPtr;
+}
+
 Ward constructWard(int wardId, int nursingType, int bedType, int totalBedNum, int occupiedBedNum,
     bool bedSituation[10], Ward* next) {
     Ward ward;
@@ -153,7 +178,7 @@ Ward constructWard(int wardId, int nursingType, int bedType, int totalBedNum, in
 }
 
 
-SingleCost add(SingleCost costA, SingleCost costB) {
+SingleCost costAdd(SingleCost costA, SingleCost costB) {
     costA.fen += costB.fen;
     costA.jiao += costB.jiao;
     costA.yuan += costB.yuan;
