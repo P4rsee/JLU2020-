@@ -12,6 +12,11 @@ void pushBackDiagnosisList(DiagnosisRecord *head, DiagnosisRecord* newRecord) {
 }
 
 void freeDiagnosisRecord(DiagnosisRecord* tempRecord) {
+    freeDiagnosisSituation(tempRecord);
+    free(tempRecord);
+}
+
+void freeDiagnosisSituation(DiagnosisRecord* tempRecord) {
     int flag = tempRecord->diagnosisSituation.setFlag;
     if (flag == 0) {
         CheckInfo* tempPtr = tempRecord->diagnosisSituation.
@@ -30,7 +35,6 @@ void freeDiagnosisRecord(DiagnosisRecord* tempRecord) {
             tempPtr = nextPtr;
         }
     }
-    free(tempRecord);
 }
 
 void freeDiagnosisRecordList(DiagnosisRecord* head) {
@@ -123,6 +127,8 @@ DiagnosisRecord* queryDiagnosisByRegisterId(DiagnosisRecord* head,int registerId
         }
         tempPtr = tempPtr->next;
     }
+    if (tempPtr == NULL)
+        return NULL;
     DiagnosisRecord* resPtr = (DiagnosisRecord*) malloc(sizeof(DiagnosisRecord));
     *resPtr = *tempPtr;
     return resPtr;
@@ -199,7 +205,7 @@ void freeWardList(Ward* head) {
         head = tempPtr;
     }
 }
-    
+
 void freeAllList(DiagnosisRecord* recordHaed, DoctorNode* doctorHead, Ward* wardHead) {
     freeDiagnosisRecordList(recordHaed);
     freeDoctorList(doctorHead);

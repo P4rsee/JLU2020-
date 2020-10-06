@@ -56,9 +56,14 @@ typedef struct SingleCost {  // 单个项目的价格
     int fen;
 };
 
+char* convertSingleCostToString(SingleCost);
+
+SingleCost costAdd(SingleCost costA, SingleCost costB);
+
 SingleCost constructSingleCost(int yuan, int jiao, int fen);
 
 SingleCost constructSingleCost(char *);
+
 
 typedef struct CheckInfo { // 检查信息
     int checkId;
@@ -102,6 +107,10 @@ typedef struct TimeRecord {  // 日期
 };
 
 TimeRecord constructTimeRecord(int month, int day, int hour, int minute);
+
+TimeRecord convertStringToTimeRecord(const char*);
+
+char* convertTimeRecordToString(const TimeRecord);
 
 typedef struct InHospitalRecord {  // 住院类
     TimeRecord hospitalizedDate;
@@ -160,4 +169,3 @@ bool checkError(DiagnosisRecord); // 检查诊疗记录是否有错
 
 void FileInput(); // 从文件导入诊疗记录
 
-SingleCost costAdd(SingleCost costA, SingleCost costB);

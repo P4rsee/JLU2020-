@@ -9,6 +9,8 @@ void freeDiagnosisRecord(DiagnosisRecord* tempRecord);
 
 void freeDiagnosisRecordList(DiagnosisRecord*);
 
+void freeDiagnosisSituation(DiagnosisRecord*);
+
 bool deleteDiagnosisList(DiagnosisRecord *head, int queryId);
 
 void pushBackCheckList(CheckInfo* head,CheckInfo * newCheck);

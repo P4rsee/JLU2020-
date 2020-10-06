@@ -5,6 +5,7 @@
 #include <malloc.h>
 #include <string.h>
 
+
 PatientInfo constructPatientInfo(char name[20], int age, int registerId) {
     PatientInfo patientInfo;
     strcpy(patientInfo.name, name);
@@ -71,6 +72,28 @@ SingleCost constrcutSingleCost(char *costStr) {
     return singleCost;
 }
 
+char* convertSingleCostToString(SingleCost singleCost) {
+    char *buf = (char*) calloc(20,sizeof(char));
+    int pos = 0;
+    if (singleCost.yuan == 0) {
+        buf[pos++] = '0';
+    } else {
+        int bit = 0, base = 1;
+        while(singleCost.yuan >= base*10) {
+            bit++,base *= 10;
+        }
+        while(bit >= 0) {
+            buf[pos++] = singleCost.yuan / base + '0';
+            bit--,singleCost.yuan%=base,base/=10;;
+        }
+    }
+    buf[pos++] = '.';
+    buf[pos++] = singleCost.jiao + '0';
+    buf[pos++] = singleCost.fen + '0';
+    buf[pos++] = 0;
+    return buf;
+}
+
 CheckInfo constructCheckInfo(int checkId, SingleCost singleCost, CheckInfo* next) {
     CheckInfo checkInfo;
     checkInfo.singleCost = singleCost;
@@ -115,6 +138,60 @@ TimeRecord constructTimeRecord(int month, int day, int hour, int minute) {
     timeRecord.hour = hour;
     timeRecord.minute = minute;
     return timeRecord;
+}
+
+TimeRecord convertStringToTimeRecord(const char *str) {
+    TimeRecord timeRecord;
+    char buf[20];
+    int pos = 0,cnt = 0,p1, p2, p3, p4;
+    while(str[pos] != '-') pos++;
+    p1 = pos;
+    pos++;
+    while(str[pos] != '-') pos++;
+    p2 = pos;
+    for (int i = p1+1;i < p2;i++)
+        buf[cnt++] = str[i];
+    buf[cnt] = 0, cnt = 0;
+    timeRecord.month = atoi(buf);
+    while(str[pos] != ' ')
+        pos++;
+    p3 = pos;
+    for (int i = p2 + 1;i < p3;i++)
+        buf[cnt++] = str[i];
+    buf[cnt] = 0, cnt = 0;
+    timeRecord.day = atoi(buf);
+    while(str[pos] != ':')
+        pos++;
+    p4 = pos;
+    for (int i = p3 + 1;i < p4;i++)
+        buf[cnt++] = str[i];
+    buf[cnt] = 0,cnt = 0;
+    timeRecord.hour = atoi(buf);
+    int p5 = strlen(str);
+    for (int i = p4 + 1;i < p5;i++)
+        buf[cnt++] = str[i];
+    buf[cnt] = 0,cnt = 0;
+    timeRecord.minute = atoi(buf);
+    return timeRecord;
+}
+
+char* convertTimeRecordToString(const TimeRecord timeRecord) {
+    char *str = (char*) calloc(100,sizeof(char));
+    int pos = 5, num = 0;
+    str[0] = '2', str[1] = '0', str[2] ='2', str[3] = '0',str[4] = '-';
+    str[pos++] = '0' + timeRecord.month / 10;
+    str[pos++] = '0' + timeRecord.month % 10;
+    str[pos++] = '-';
+    str[pos++] = '0' + timeRecord.day / 10;
+    str[pos++] = '0' + timeRecord.day % 10;
+    str[pos++] = ' ';
+    str[pos++] = '0' + timeRecord.hour / 10;
+    str[pos++] = '0' + timeRecord.hour % 10;
+    str[pos++] = ':';
+    str[pos++] = '0' + timeRecord.minute / 10;
+    str[pos++] = '0' + timeRecord.minute % 10;
+    str[pos++] = 0;
+    return str;
 }
 
 InHospitalRecord constructInHospitalRecord(TimeRecord hospitalizedDate, TimeRecord predictedLeaveDate,
