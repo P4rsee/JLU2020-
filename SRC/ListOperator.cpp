@@ -33,6 +33,15 @@ void freeDiagnosisRecord(DiagnosisRecord* tempRecord) {
     free(tempRecord);
 }
 
+void freeDiagnosisRecordList(DiagnosisRecord* head) {
+    DiagnosisRecord *tempPtr;
+    while (head != NULL) {
+        tempPtr = head->next;
+        free(head);
+        head = tempPtr;
+    }
+}
+
 bool deleteDiagnosisList(DiagnosisRecord *head, int queryId) {
     DiagnosisRecord *prePtr = head;
     DiagnosisRecord *tempPtr = prePtr->next;
@@ -132,6 +141,15 @@ DoctorNode* queryDoctorBySectionId(DoctorNode* head,int sectionId) {
     return tempHead;
 }
 
+void freeDoctorList(DoctorNode* head) {
+    DoctorNode* tempPtr;
+    while(head != NULL) {
+        tempPtr = head->next;
+        free(head);
+        head = tempPtr;
+    }
+}
+
 DiagnosisRecord* findModifiedNode(DiagnosisRecord* head,int registerId) {
     DiagnosisRecord *tempPtr = head->next;
     while(tempPtr != NULL) {
@@ -171,4 +189,19 @@ bool modifyWard(Ward *head, int wardId, Ward *newWard) {
         return false;
     *ptr = *newWard;
     return true;
+}
+
+void freeWardList(Ward* head) {
+    Ward* tempPtr;
+    while(head != NULL) {
+        tempPtr = head->next;
+        free(head);
+        head = tempPtr;
+    }
+}
+    
+void freeAllList(DiagnosisRecord* recordHaed, DoctorNode* doctorHead, Ward* wardHead) {
+    freeDiagnosisRecordList(recordHaed);
+    freeDoctorList(doctorHead);
+    freeWardList(wardHead);
 }

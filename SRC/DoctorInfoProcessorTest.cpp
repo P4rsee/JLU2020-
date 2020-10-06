@@ -33,9 +33,11 @@ int main() {
     generateRegisterID(tempRecordPtr);
     printf("currentID is :%d\n",tempRecordPtr->patientInfo.registerId);
     return 0;
+    freeDoctorList(mergeHead);
+    freeDiagnosisRecord(tempRecordPtr);
 }
-
 */
+
 
 /*
 Run Result

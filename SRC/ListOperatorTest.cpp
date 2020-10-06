@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 int main() {
-    system("chcp 65001");
+    //system("chcp 65001n");
     TimeRecord tempTimeRecord = constructTimeRecord(2,2,2,2);
     PatientInfo tempPatientInfo = constructPatientInfo("TK-WANG",24,1);
     bool constructId[7] = {0,0,1,1,1,0,1};
@@ -26,13 +26,14 @@ int main() {
     printf("%d\n",head->next->patientInfo.registerId);
     *RecordPtr = RecordB;
     pushBackDiagnosisList(head,RecordPtr);
-    printf("Ìí¼ÓÁ½¸öµãºó\n");
-    printf("µÚÒ»¸öµãµÄID:%d µÚ¶þ¸öµãµÄID:%d\n",queryDiagnosisByRegisterId(head,1)->patientInfo.registerId,head->next->next->patientInfo.registerId);
+    printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n");
+    printf("ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ID:%d ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ID:%d\n",queryDiagnosisByRegisterId(head,1)->patientInfo.registerId,head->next->next->patientInfo.registerId);
     DiagnosisRecord* sectionQuerytest = queryDiagnosisBySectionId(head,1);
-    printf("ÒÔ¿ÆÊÒºÅ²éÑ¯\n");
+    printf("ï¿½Ô¿ï¿½ï¿½ÒºÅ²ï¿½Ñ¯\n");
     showAllDiagnosisRecords(sectionQuerytest);
     deleteDiagnosisList(head,1);
-    printf("É¾³ýµÚÒ»¸öµãºó\nµÚÒ»¸öµãµÄID:%d\n",head->next->patientInfo.registerId);
+    printf("É¾ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½\nï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ID:%d\n",head->next->patientInfo.registerId);
     return 0;
 }
+
 */

@@ -53,15 +53,6 @@ DoctorNode* getRecommendedDoctors(DoctorNode *head,int sectionId) {
     return tempHead;
 }
 
-void freeRecommendedDoctors(DoctorNode* head) {
-    DoctorNode* currentPtr = head->next;
-    while(head != NULL) {
-        free(head);
-        head = currentPtr;
-        currentPtr = currentPtr->next;
-    }
-}
-
 void combineDoctorIntoDiagnosisRecord(DiagnosisRecord* head,
     DiagnosisRecord *currentRecordPtr, DoctorNode* newDoctorPtr) {
     currentRecordPtr->doctorInfo = newDoctorPtr->doctorInfo;
