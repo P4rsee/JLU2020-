@@ -1,7 +1,7 @@
 #include "OutRecord.h"
 
 void OutCheckRecord(FILE* fp, DiagnosisSituationUnion* tempInfo) {
-    CheckInfo* nowPos = tempInfo->checkRecord.checkInfoHead;
+    CheckInfo* nowPos = tempInfo->checkRecord.checkInformationHead;
     fprintf(fp, "%d %d %d %d",
         tempInfo->checkRecord.totalCost.yuan,
         tempInfo->checkRecord.totalCost.jiao,
@@ -18,7 +18,7 @@ void OutCheckRecord(FILE* fp, DiagnosisSituationUnion* tempInfo) {
 
 // 输出开药类型到诊疗记录中
 void OutPrescribeRecord(FILE* fp, DiagnosisSituationUnion* tempInfo) {
-    PrescribeInfo* nowPos = tempInfo->prescribeRecord.prescribeInfoHead;
+    PrescribeInfo* nowPos = tempInfo->prescribeRecord.prescribeInformationHead;
     fprintf(fp, "%d %d %d %d",
         tempInfo->prescribeRecord.totalCost.yuan,
         tempInfo->prescribeRecord.totalCost.jiao,
@@ -50,15 +50,15 @@ void OutInHospitalRecord(FILE* fp, DiagnosisSituationUnion* tempInfo) {
 void OutRecord(FILE* fp, DiagnosisRecord* record) {
     //                           日期       挂号 姓名 年龄 工号 科室 姓名 级别
     fprintf(fp, "# %02d%02d%02d%02d %07d %s %d %04d %02d %s %d ",
-        record->recordTime.month,
-        record->recordTime.day,
-        record->recordTime.hour,
-        record->recordTime.minute,
+        record->TimeRecord.month,
+        record->TimeRecord.day,
+        record->TimeRecord.hour,
+        record->TimeRecord.minute,
         record->patientInfo.registerId,
         record->patientInfo.name,
         record->patientInfo.age,
         record->doctorInfo.id,
-        record->doctorInfo.sectionId,
+        record->doctorInfo.section,
         record->doctorInfo.name,
         record->doctorInfo.level
     );

@@ -7,36 +7,44 @@ void pushBackDiagnosisList(DiagnosisRecord *head, DiagnosisRecord* newRecord);
 
 void freeDiagnosisRecord(DiagnosisRecord* tempRecord);
 
-void freeDiagnosisRecordList(DiagnosisRecord*);
-
-void freeDiagnosisSituation(DiagnosisRecord*);
-
 bool deleteDiagnosisList(DiagnosisRecord *head, int queryId);
 
-void pushBackCheckList(CheckInfo* head,CheckInfo * newCheck);
+void pushBackCheckList(CheckInfo* head, CheckInfo * newCheck);
 
 void pushBackPrescribeList(PrescribeInfo* head, PrescribeInfo  *newPrescribe);
 
 void pushBackDoctorList(DoctorNode* head, DoctorNode *newDoctorNode);
 
-DiagnosisRecord* queryDiagnosisBySectionId(DiagnosisRecord* head,int sectionId);
+DiagnosisRecord* queryDiagnosisBySectionId(DiagnosisRecord* head, int sectionId);
 
 DiagnosisRecord* queryDiagnosisByDoctorId(DiagnosisRecord* head, int doctorId);
 
-DiagnosisRecord* queryDiagnosisByRegisterId(DiagnosisRecord* head,int registerId);
+DiagnosisRecord* queryDiagnosisByRegisterId(DiagnosisRecord* head, int registerId);
 
-DoctorNode* queryDoctorBySectionId(DoctorNode* head,int sectionId);
+DoctorNode* queryDoctorByDoctorId(DoctorNode* head, int doctorId);
 
-void freeDoctorList(DoctorNode* head);
+DoctorNode* queryDoctorBySectionId(DoctorNode* head, int sectionId);
 
-DiagnosisRecord* findModifiedNode(DiagnosisRecord* head,int registerId);
+DiagnosisRecord* findModifiedNode(DiagnosisRecord* head, int registerId);
 
 void showAllDiagnosisRecords(DiagnosisRecord* head);
 
-void pushbackWard(Ward* head,Ward* newWard);
+void pushbackWard(Ward* head, Ward* newWard);
 
-bool modifyWard(Ward *head, int wardId, Ward *newWard);
+Ward * modifyWard(Ward *head, int wardId);
+
+void freeDiagnosisRecordList(DiagnosisRecord*);
+
+void freeDoctorList(DoctorNode* head);
 
 void freeWardList(Ward*);
 
 void freeAllList(DiagnosisRecord*, DoctorNode*, Ward*);
+
+void freeDiagnosisSituation(DiagnosisRecord*);
+
+int sortInHospitalList(DiagnosisRecord*);
+
+void getSickBedNum(DiagnosisRecord* recordNode);
+
+void freeWardBed(int wardID, int bedId);

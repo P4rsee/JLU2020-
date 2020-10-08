@@ -20,10 +20,10 @@ void FileInput() {  // 从文件导入诊疗记录
         printf("写入完毕\n");
     }
     return;
-}
+}   
 
-/*int main(void) {
+int main(void) {
     //system("chcp 65001");
     FileInput();
     return 0;
-}*/
+}

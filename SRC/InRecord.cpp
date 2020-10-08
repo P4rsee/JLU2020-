@@ -1,6 +1,6 @@
 #include "InRecord.h"
 
-// ¸³ÖµÈÕÆÚ
+// ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½
 void SetDate(char* str, int* month, int* day, int* hour, int* minute) {
     (*month) = atoi(str) / 1000000;
     (*day) = atoi(str) / 10000 % 100;
@@ -8,8 +8,8 @@ void SetDate(char* str, int* month, int* day, int* hour, int* minute) {
     (*minute) = atoi(str) % 100;
 }
 
-// ÓÃÓÚÎÄ¼þ¶ÁÈë ÅÐ¶Ï·ÑÓÃ ÈôºÏ·¨Ôò¸³Öµ·ÑÓÃ
-int GetCost(FILE* fp, int* yuan, int* jiao, int* fen) { // ¶ÁÈë·ÑÓÃ
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¶Ï·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½
+int GetCost(FILE* fp, int* yuan, int* jiao, int* fen) { // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     char cache[100]; int flag = 0;
     fscanf(fp, "%s", cache);
     if (IsEnd(cache)) return FILE_END;
@@ -17,14 +17,14 @@ int GetCost(FILE* fp, int* yuan, int* jiao, int* fen) { // ¶ÁÈë·ÑÓÃ
     else (*yuan) = atoi(cache);
     fscanf(fp, "%s", cache);
     if (IsEnd(cache)) return FILE_END;
-    if (!IsNumber(cache)) flag = 1;  // ½Ç
+    if (!IsNumber(cache)) flag = 1;  // ï¿½ï¿½
     else {
         (*jiao) = atoi(cache);
         if (atoi(cache) > 9) flag = 1;
     }
     fscanf(fp, "%s", cache);
     if (IsEnd(cache)) return FILE_END;
-    if (!IsNumber(cache)) flag = 1;  // ·Ö
+    if (!IsNumber(cache)) flag = 1;  // ï¿½ï¿½
     else {
         (*fen) = atoi(cache);
         if (atoi(cache) > 9) flag = 1;
@@ -32,48 +32,48 @@ int GetCost(FILE* fp, int* yuan, int* jiao, int* fen) { // ¶ÁÈë·ÑÓÃ
     return !flag ? LEGAL_DATA : INVALID_DATA;
 }
 
-// »ñÈ¡¶ÔÓ¦µÄÓë¼ì²éÓÐ¹ØµÄÐÅÏ¢
+// ï¿½ï¿½È¡ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¹Øµï¿½ï¿½ï¿½Ï¢
 int GetCheckInfo(FILE* fp, DiagnosisSituationUnion* tempInfo) {
-    char cache[100];  // ÔÝÊ±´æ´¢ ÓÃÓÚ¼ì²é
-    int flag = 0; // ±ê¼ÇÊÇ·ñÓÐ´íÎó
-    int retInt = 0; // ¼ÇÂ¼Ã¿´Î¼ì²éµÄ·µ»ØÖµ
+    char cache[100];  // ï¿½ï¿½Ê±ï¿½æ´¢ ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½
+    int flag = 0; // ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ð´ï¿½ï¿½ï¿½
+    int retInt = 0; // ï¿½ï¿½Â¼Ã¿ï¿½Î¼ï¿½ï¿½Ä·ï¿½ï¿½ï¿½Öµ
     retInt = GetCost(fp, &tempInfo->checkRecord.totalCost.yuan,
         &tempInfo->checkRecord.totalCost.jiao,
-        &tempInfo->checkRecord.totalCost.fen); // ¼ì²é×Ü·ÑÓÃ
+        &tempInfo->checkRecord.totalCost.fen); // ï¿½ï¿½ï¿½ï¿½Ü·ï¿½ï¿½ï¿½
     if (retInt != LEGAL_DATA) {
         flag = 1; if (retInt == FILE_END)return FILE_END;
     }
     fscanf(fp, "%s", cache);
     if (IsEnd(cache)) return FILE_END;
-    int count = 0;  // ¼ÇÂ¼¼ì²éÊýÄ¿
+    int count = 0;  // ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿
     if (!IsNumber(cache)) flag = 1;
     else {
         count = atoi(cache);
         tempInfo->checkRecord.typeNumber = count;
     }
-    if (tempInfo->checkRecord.checkInfoHead == NULL) {
-        tempInfo->checkRecord.checkInfoHead = (CheckInfo*)malloc(sizeof(CheckInfo));
+    if (tempInfo->checkRecord.checkInformationHead == NULL) {
+        tempInfo->checkRecord.checkInformationHead = (CheckInfo*)malloc(sizeof(CheckInfo));
     }
-    CheckInfo* nowCheck = tempInfo->checkRecord.checkInfoHead; // µ±Ç°Î»ÖÃÖ¸ÏòÍ·½Úµã
+    CheckInfo* nowCheck = tempInfo->checkRecord.checkInformationHead; // ï¿½ï¿½Ç°Î»ï¿½ï¿½Ö¸ï¿½ï¿½Í·ï¿½Úµï¿½
     nowCheck->next = NULL; nowCheck->checkId = 0; 
     nowCheck->singleCost.yuan = nowCheck->singleCost.jiao = nowCheck->singleCost.fen = 0;
     int totYuan = 0, totJiao = 0, totFen = 0;
-    for (int i = 0; i < count; i++) { // Â¼ÈëÃ¿ÖÖ¼ì²é
-        CheckInfo* nextCheck = (CheckInfo*)malloc(sizeof(CheckInfo)); // ÏÂÒ»¸ö½Úµã
+    for (int i = 0; i < count; i++) { // Â¼ï¿½ï¿½Ã¿ï¿½Ö¼ï¿½ï¿½
+        CheckInfo* nextCheck = (CheckInfo*)malloc(sizeof(CheckInfo)); // ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Úµï¿½
         fscanf(fp, "%s", cache);
         if (!IsNumber(cache)) flag = 1;
-        else nextCheck->checkId = atoi(cache); // ¼ÇÂ¼¼ì²é±àºÅ
-        if (IsEnd(cache)) { // ¼ÇÂ¼ÌáÇ°ÖÕÖ¹
+        else nextCheck->checkId = atoi(cache); // ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½
+        if (IsEnd(cache)) { // ï¿½ï¿½Â¼ï¿½ï¿½Ç°ï¿½ï¿½Ö¹
             flag = FILE_END; break;
         }
         retInt = GetCost(fp, &nextCheck->singleCost.yuan,
             &nextCheck->singleCost.jiao,
-            &nextCheck->singleCost.fen); // µ¥ÖÖ¼ì²éµÄ·ÑÓÃ
+            &nextCheck->singleCost.fen); // ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½Ä·ï¿½ï¿½ï¿½
         nowCheck->next = nextCheck;
         nowCheck = nextCheck;
         if (retInt != LEGAL_DATA) {
             flag = 1; if (retInt == FILE_END) {
-                flag = FILE_END; break;  // ¼ÇÂ¼ÌáÇ°ÖÕÖ¹
+                flag = FILE_END; break;  // ï¿½ï¿½Â¼ï¿½ï¿½Ç°ï¿½ï¿½Ö¹
             }
         }
         else {
@@ -88,11 +88,11 @@ int GetCheckInfo(FILE* fp, DiagnosisSituationUnion* tempInfo) {
             totYuan += nextCheck->singleCost.yuan;
         }
     }
-    nowCheck->next = NULL; // ×¢Òâ Èç¹û¼ì²éÊýÄ¿³¬¹ýcountËµÃ÷³öÈ¥Ö®ºó²»ÄÜÖ±½Ó¶Áµ½½áÊø·û
+    nowCheck->next = NULL; // ×¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½countËµï¿½ï¿½ï¿½ï¿½È¥Ö®ï¿½ï¿½ï¿½ï¿½Ö±ï¿½Ó¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     if (totYuan != tempInfo->checkRecord.totalCost.yuan ||
         totJiao != tempInfo->checkRecord.totalCost.jiao ||
         totFen != tempInfo->checkRecord.totalCost.fen)flag = 1;
-    if (flag) {  // ´ýÌî³ä freeÁ´±í or freeÁ´±íÔÚ×îÍâ²ãÊµÏÖ »òÕß ÖØ¸´ÊµÏÖÈ·±£free
+    if (flag) {  // ï¿½ï¿½ï¿½ï¿½ï¿½ freeï¿½ï¿½ï¿½ï¿½ or freeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ø¸ï¿½Êµï¿½ï¿½È·ï¿½ï¿½free
         if (flag == FILE_END)return FILE_END;
         else return INVALID_DATA;
     }
@@ -101,43 +101,43 @@ int GetCheckInfo(FILE* fp, DiagnosisSituationUnion* tempInfo) {
     }
 }
 
-// »ñÈ¡¶ÔÓ¦µÄÓë¿ªÒ©ÓÐ¹ØµÄÐÅÏ¢
+// ï¿½ï¿½È¡ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ë¿ªÒ©ï¿½Ð¹Øµï¿½ï¿½ï¿½Ï¢
 int GetPrescribeInfo(FILE* fp, DiagnosisSituationUnion* tempInfo) {
-    char cache[100];  // ÔÝÊ±´æ´¢ ÓÃÓÚ¼ì²é
-    int flag = 0; // ±ê¼ÇÊÇ·ñÓÐ´íÎó
-    int retInt = 0; // ¼ÇÂ¼Ã¿´Î¼ì²éµÄ·µ»ØÖµ
+    char cache[100];  // ï¿½ï¿½Ê±ï¿½æ´¢ ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½
+    int flag = 0; // ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ð´ï¿½ï¿½ï¿½
+    int retInt = 0; // ï¿½ï¿½Â¼Ã¿ï¿½Î¼ï¿½ï¿½Ä·ï¿½ï¿½ï¿½Öµ
     retInt = GetCost(fp, &tempInfo->checkRecord.totalCost.yuan,
         &tempInfo->checkRecord.totalCost.jiao,
-        &tempInfo->checkRecord.totalCost.fen); // ¼ì²é×Ü·ÑÓÃ
+        &tempInfo->checkRecord.totalCost.fen); // ï¿½ï¿½ï¿½ï¿½Ü·ï¿½ï¿½ï¿½
     if (retInt != LEGAL_DATA) {
         flag = 1; if (retInt == FILE_END)return FILE_END;
     }
     fscanf(fp, "%s", cache);
     if (IsEnd(cache)) return FILE_END;
-    int count = 0;  // ¼ÇÂ¼¿ªÒ©ÖÖÊý
+    int count = 0;  // ï¿½ï¿½Â¼ï¿½ï¿½Ò©ï¿½ï¿½ï¿½ï¿½
     if (!IsNumber(cache)) flag = 1;
     else {
         count = atoi(cache);
         tempInfo->prescribeRecord.typeNumber = count;
     }
-    // µ±Ç°Î»ÖÃÖ¸ÏòÍ·½Úµã
-    if (tempInfo->prescribeRecord.prescribeInfoHead == NULL) {
-        tempInfo->prescribeRecord.prescribeInfoHead = 
+    // ï¿½ï¿½Ç°Î»ï¿½ï¿½Ö¸ï¿½ï¿½Í·ï¿½Úµï¿½
+    if (tempInfo->prescribeRecord.prescribeInformationHead == NULL) {
+        tempInfo->prescribeRecord.prescribeInformationHead = 
             (PrescribeInfo*)malloc(sizeof(PrescribeInfo));
     }
-    PrescribeInfo* nowDrug = tempInfo->prescribeRecord.prescribeInfoHead;
+    PrescribeInfo* nowDrug = tempInfo->prescribeRecord.prescribeInformationHead;
     nowDrug->next = NULL; nowDrug->drugId = nowDrug->drugNumber = 0;
-    for (int i = 0; i < count; i++) { // Ã¿ÖÖÒ©Æ·
-        PrescribeInfo* nextDrug = (PrescribeInfo*)malloc(sizeof(PrescribeInfo));  // ÏÂÒ»¸ö½Úµã
+    for (int i = 0; i < count; i++) { // Ã¿ï¿½ï¿½Ò©Æ·
+        PrescribeInfo* nextDrug = (PrescribeInfo*)malloc(sizeof(PrescribeInfo));  // ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Úµï¿½
         fscanf(fp, "%s", cache);
         if (!IsNumber(cache)) flag = 1;
-        else nextDrug->drugId = atoi(cache); // ¼ÇÂ¼Ò©Æ·±àºÅ
+        else nextDrug->drugId = atoi(cache); // ï¿½ï¿½Â¼Ò©Æ·ï¿½ï¿½ï¿½
         if (IsEnd(cache)) {
             flag = FILE_END; break;
         }
         fscanf(fp, "%s", cache);
         if (!IsNumber(cache)) flag = 1;
-        else nextDrug->drugNumber = atoi(cache); // ¼ÇÂ¼Ò©Æ·ÊýÁ¿
+        else nextDrug->drugNumber = atoi(cache); // ï¿½ï¿½Â¼Ò©Æ·ï¿½ï¿½ï¿½ï¿½
         if (IsEnd(cache)) {
             flag = FILE_END; break;
         }
@@ -145,7 +145,7 @@ int GetPrescribeInfo(FILE* fp, DiagnosisSituationUnion* tempInfo) {
         nowDrug = nextDrug;
     }
     nowDrug->next = NULL;
-    if (flag) {  // ´ýÌî³ä freeÁ´±í
+    if (flag) {  // ï¿½ï¿½ï¿½ï¿½ï¿½ freeï¿½ï¿½ï¿½ï¿½
         if (flag == FILE_END)return FILE_END;
         else return INVALID_DATA;
     }
@@ -154,14 +154,14 @@ int GetPrescribeInfo(FILE* fp, DiagnosisSituationUnion* tempInfo) {
     }
 }
 
-// »ñÈ¡¶ÔÓ¦µÄÓë×¡ÔºÓÐ¹ØµÄÐÅÏ¢
+// ï¿½ï¿½È¡ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½×¡Ôºï¿½Ð¹Øµï¿½ï¿½ï¿½Ï¢
 int GetInHospitalInfo(FILE* fp, DiagnosisSituationUnion* tempInfo) {
-    char cache[100];  // ÔÝÊ±´æ´¢ ÓÃÓÚ¼ì²é
-    int flag = 0; // ±ê¼ÇÊÇ·ñÓÐ´íÎó
-    int retInt = 0; // ¼ÇÂ¼Ã¿´Î¼ì²éµÄ·µ»ØÖµ
+    char cache[100];  // ï¿½ï¿½Ê±ï¿½æ´¢ ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½
+    int flag = 0; // ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ð´ï¿½ï¿½ï¿½
+    int retInt = 0; // ï¿½ï¿½Â¼Ã¿ï¿½Î¼ï¿½ï¿½Ä·ï¿½ï¿½ï¿½Öµ
     fscanf(fp, "%s", cache);
     retInt = IsDate(cache);
-    if (retInt == 1) { // ÈëÔºÈÕÆÚ
+    if (retInt == 1) { // ï¿½ï¿½Ôºï¿½ï¿½ï¿½ï¿½
         SetDate(cache, &tempInfo->inHospitalRecord.hospitalizedDate.month,
             &tempInfo->inHospitalRecord.hospitalizedDate.day,
             &tempInfo->inHospitalRecord.hospitalizedDate.hour,
@@ -172,7 +172,7 @@ int GetInHospitalInfo(FILE* fp, DiagnosisSituationUnion* tempInfo) {
     }
     fscanf(fp, "%s", cache);
     retInt = IsDate(cache);
-    if (retInt == 1) { // Ô¤¼Æ³öÔºÈÕÆÚ
+    if (retInt == 1) { // Ô¤ï¿½Æ³ï¿½Ôºï¿½ï¿½ï¿½ï¿½
         SetDate(cache, &tempInfo->inHospitalRecord.predictedLeaveDate.month,
             &tempInfo->inHospitalRecord.predictedLeaveDate.day,
             &tempInfo->inHospitalRecord.predictedLeaveDate.hour,
@@ -193,46 +193,46 @@ int GetInHospitalInfo(FILE* fp, DiagnosisSituationUnion* tempInfo) {
     else return LEGAL_DATA;
 }
 
-// ´ÓÎÄ¼þ¶ÁÈë¶ÔÓ¦µÄÕïÁÆÀàÐÍ
+// ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 int GetDiagnosisSituationInfo(FILE* fp, DiagnosisRecord* res) {
-    int retInt = 0; // ¼ÇÂ¼Ã¿´Î¼ì²éµÄ·µ»ØÖµ
+    int retInt = 0; // ï¿½ï¿½Â¼Ã¿ï¿½Î¼ï¿½ï¿½Ä·ï¿½ï¿½ï¿½Öµ
     DiagnosisSituationUnion* tempInfo =
         &res->diagnosisSituation.diagnosisSituationInfo;
-    if (res->diagnosisSituation.setFlag == 0) {  // ¼ì²éÀà
+    if (res->diagnosisSituation.setFlag == 0) {  // ï¿½ï¿½ï¿½ï¿½ï¿½
         retInt = GetCheckInfo(fp, tempInfo);
     }
-    else if (res->diagnosisSituation.setFlag == 1) {  // ¿ªÒ©Àà
+    else if (res->diagnosisSituation.setFlag == 1) {  // ï¿½ï¿½Ò©ï¿½ï¿½
         retInt = GetPrescribeInfo(fp, tempInfo);
     }
-    else if (res->diagnosisSituation.setFlag == 2) {  // ×¡ÔºÀà
+    else if (res->diagnosisSituation.setFlag == 2) {  // ×¡Ôºï¿½ï¿½
         retInt = GetInHospitalInfo(fp, tempInfo);
     }
-    else retInt = INVALID_DATA;  // ÕïÁÆÀàÐÍµÄ±àºÅ³ö´í
-    return retInt; // ±ê¼Ç ¸Ã´¦ÓÐ´ý¿¼ÂÇ
+    else retInt = INVALID_DATA;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÍµÄ±ï¿½Å³ï¿½ï¿½ï¿½
+    return retInt; // ï¿½ï¿½ï¿½ ï¿½Ã´ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½
 }
 
-// ´ÓÎÄ¼þÖÖ»ñÈ¡»¼ÕßÏà¹ØÐÅÏ¢
+// ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ö»ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 int GetPatientRecord(FILE* fp, DiagnosisRecord* res) {
-    char cache[100];  // ÔÝÊ±´æ´¢ ÓÃÓÚ¼ì²é
-    int flag = 0; // ±ê¼ÇÊÇ·ñÓÐ´íÎó
-    int retInt = 0; // ¼ÇÂ¼Ã¿´Î¼ì²éµÄ·µ»ØÖµ
+    char cache[100];  // ï¿½ï¿½Ê±ï¿½æ´¢ ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½
+    int flag = 0; // ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ð´ï¿½ï¿½ï¿½
+    int retInt = 0; // ï¿½ï¿½Â¼Ã¿ï¿½Î¼ï¿½ï¿½Ä·ï¿½ï¿½ï¿½Öµ
     fscanf(fp, "%s", cache);
-    retInt = IsRegisterId(cache); // ¼ì²é»¼Õß¹ÒºÅ
-    if (retInt == LEGAL_DATA) res->patientInfo.registerId = atoi(cache);  // ¹ÒºÅºÏ·¨
+    retInt = IsRegisterId(cache); // ï¿½ï¿½é»¼ï¿½ß¹Òºï¿½
+    if (retInt == LEGAL_DATA) res->patientInfo.registerId = atoi(cache);  // ï¿½ÒºÅºÏ·ï¿½
     else {
         flag = 1; if (retInt == FILE_END)return FILE_END;
     }
     fscanf(fp, "%s", cache);
-    retInt = IsName(cache); // ¼ì²é»¼ÕßÐÕÃû³¤¶ÈÊÇ·ñÕý³£ ÒÔ20×Ö(char[40])¼°ÒÔÄÚÎªÕý³£
-    if (retInt == LEGAL_DATA) {  // ÐÕÃûºÏ·¨
+    retInt = IsName(cache); // ï¿½ï¿½é»¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½20ï¿½ï¿½(char[40])ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
+    if (retInt == LEGAL_DATA) {  // ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½
         strcpy(res->patientInfo.name, cache);
     }
     else {
         flag = 1; if (retInt == FILE_END)return FILE_END;
     }
     fscanf(fp, "%s", cache);
-    retInt = IsAge(cache); // ¼ì²é»¼ÕßÄêÁä
-    if (retInt == LEGAL_DATA) res->patientInfo.age = atoi(cache);  // ÄêÁäºÏ·¨
+    retInt = IsAge(cache); // ï¿½ï¿½é»¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    if (retInt == LEGAL_DATA) res->patientInfo.age = atoi(cache);  // ï¿½ï¿½ï¿½ï¿½Ï·ï¿½
     else {
         flag = 1; if (retInt == FILE_END)return FILE_END;
     }
@@ -240,45 +240,45 @@ int GetPatientRecord(FILE* fp, DiagnosisRecord* res) {
     else return LEGAL_DATA;
 }
 
-// ´ÓÎÄ¼þÖÐ»ñÈ¡Ò½ÉúÏà¹ØÐÅÏ¢
+// ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ð»ï¿½È¡Ò½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 int GetDoctorRecord(FILE* fp, DiagnosisRecord* res) {
-    char cache[100];  // ÔÝÊ±´æ´¢ ÓÃÓÚ¼ì²é
-    int flag = 0; // ±ê¼ÇÊÇ·ñÓÐ´íÎó
-    int retInt = 0; // ¼ÇÂ¼Ã¿´Î¼ì²éµÄ·µ»ØÖµ
+    char cache[100];  // ï¿½ï¿½Ê±ï¿½æ´¢ ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½
+    int flag = 0; // ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ð´ï¿½ï¿½ï¿½
+    int retInt = 0; // ï¿½ï¿½Â¼Ã¿ï¿½Î¼ï¿½ï¿½Ä·ï¿½ï¿½ï¿½Öµ
     fscanf(fp, "%s", cache);
-    retInt = IsDoctorId(cache); // ¼ì²éÒ½Éú¹¤ºÅ
-    if (retInt == LEGAL_DATA) res->doctorInfo.id = atoi(cache);  // ¹¤ºÅºÏ·¨
+    retInt = IsDoctorId(cache); // ï¿½ï¿½ï¿½Ò½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    if (retInt == LEGAL_DATA) res->doctorInfo.id = atoi(cache);  // ï¿½ï¿½ï¿½ÅºÏ·ï¿½
     else {
         flag = 1; if (retInt == FILE_END)return FILE_END;
     }
-    // ¼ì²é¿ÆÊÒ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     fscanf(fp, "%s", cache);
     retInt = IsSection(cache);
     if (retInt == LEGAL_DATA) {
-        res->doctorInfo.sectionId = atoi(cache); // ¿ÆÊÒºÏ·¨
+        res->doctorInfo.section = atoi(cache); // ï¿½ï¿½ï¿½ÒºÏ·ï¿½
     }
     else {
         flag = 1; if (retInt == FILE_END)return FILE_END;
     }
     fscanf(fp, "%s", cache);
-    retInt = IsName(cache);  // ¼ì²éÒ½ÉúÐÕÃû ÀàËÆ»¼ÕßÐÕÃû
-    if (retInt == LEGAL_DATA) {  // ÐÕÃûºÏ·¨
+    retInt = IsName(cache);  // ï¿½ï¿½ï¿½Ò½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    if (retInt == LEGAL_DATA) {  // ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½
         strcpy(res->doctorInfo.name, cache);
     }
     else {
         flag = 1; if (retInt == FILE_END)return FILE_END;
     }
     fscanf(fp, "%s", cache);
-    retInt = IsDoctorLevel(cache); // ¼ì²éÒ½Éú¼¶±ð
-    if (retInt == LEGAL_DATA) { // Ò½Éú¼¶±ðºÏ·¨
+    retInt = IsDoctorLevel(cache); // ï¿½ï¿½ï¿½Ò½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    if (retInt == LEGAL_DATA) { // Ò½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½
         res->doctorInfo.level = atoi(cache);
     }
     else {
         flag = 1; if (retInt == FILE_END)return FILE_END;
     }
     fscanf(fp, "%s", cache);
-    retInt = IsConsultTime(cache); // ¼ì²éÒ½Éú³öÕïÊ±¼ä
-    if (retInt == LEGAL_DATA) { // ³öÕïÊ±¼äºÏ·¨
+    retInt = IsConsultTime(cache); // ï¿½ï¿½ï¿½Ò½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+    if (retInt == LEGAL_DATA) { // ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ï·ï¿½
         for (int i = 0; i < 7; i++)
             res->doctorInfo.consultTime[i] = cache[i] != '0' ? true : false;
     }
@@ -289,58 +289,58 @@ int GetDoctorRecord(FILE* fp, DiagnosisRecord* res) {
     else return LEGAL_DATA;
 }
 
-DiagnosisRecord* InRecord(FILE* fp) {  // ±ßÊäÈë±ß¼ì²é
-    char cache[100];  // ÔÝÊ±´æ´¢ ÓÃÓÚ¼ì²é
-    int flag = 0;  // ±ê¼ÇÊÇ·ñÓÐ´íÎó
-    int retInt = 0; // ¼ÇÂ¼Ã¿´Î¼ì²éµÄ·µ»ØÖµ±ß¼ì²é,ÈôÓÐÊý¾Ý´íÎó·µ»ØNULL
+DiagnosisRecord* InRecord(FILE* fp) {  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½
+    char cache[100];  // ï¿½ï¿½Ê±ï¿½æ´¢ ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½
+    int flag = 0;  // ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ð´ï¿½ï¿½ï¿½
+    int retInt = 0; // ï¿½ï¿½Â¼Ã¿ï¿½Î¼ï¿½ï¿½Ä·ï¿½ï¿½ï¿½Öµï¿½ß¼ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý´ï¿½ï¿½ó·µ»ï¿½NULL
     DiagnosisRecord* res = (DiagnosisRecord*)malloc(sizeof(DiagnosisRecord));
     res->diagnosisSituation.diagnosisSituationInfo.
-        checkRecord.checkInfoHead = NULL;
+        checkRecord.checkInformationHead = NULL;
     res->diagnosisSituation.diagnosisSituationInfo.
-        prescribeRecord.prescribeInfoHead = NULL;
+        prescribeRecord.prescribeInformationHead = NULL;
     fscanf(fp, "%s", cache);
     while (1) {
-        // ¼ì²éÈÕÆÚÊÇ·ñÕýÈ·
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½È·
         fscanf(fp, "%s", cache);
         retInt = IsDate(cache);
-        if (retInt == LEGAL_DATA) {  // ÈÕÆÚºÏ·¨
-            SetDate(cache, &res->recordTime.month,
-                &res->recordTime.day,
-                &res->recordTime.hour,
-                &res->recordTime.minute);
+        if (retInt == LEGAL_DATA) {  // ï¿½ï¿½ï¿½ÚºÏ·ï¿½
+            SetDate(cache, &res->TimeRecord.month,
+                &res->TimeRecord.day,
+                &res->TimeRecord.hour,
+                &res->TimeRecord.minute);
         }
         else {
             flag = 1; if (retInt == FILE_END)break;
         }
         retInt = GetPatientRecord(fp, res);
-        if (retInt != LEGAL_DATA) {  // »¼ÕßÐÅÏ¢ºÏ·¨
+        if (retInt != LEGAL_DATA) {  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½Ï·ï¿½
             flag = 1; if (retInt == FILE_END)break;
         }
         retInt = GetDoctorRecord(fp, res);
-        if (retInt != LEGAL_DATA) {  // Ò½ÉúÐÅÏ¢ºÏ·¨
+        if (retInt != LEGAL_DATA) {  // Ò½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½Ï·ï¿½
             flag = 1; if (retInt == FILE_END)break;
         }
-        // ¼ì²éÕïÁÆÀàÐÍ±àºÅ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í±ï¿½ï¿½
         fscanf(fp, "%s", cache);
         retInt = IsDiagnosisFlag(cache);
-        if (retInt == LEGAL_DATA) { // ÕïÁÆÀàÐÍ±àºÅºÏ·¨
+        if (retInt == LEGAL_DATA) { // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í±ï¿½ÅºÏ·ï¿½
             res->diagnosisSituation.setFlag = atoi(cache);
         }
         else {
             flag = 1; if (retInt == FILE_END)break;
         }
-        retInt = GetDiagnosisSituationInfo(fp, res); // »ñÈ¡ÏàÓ¦µÄÕïÁÆÀàÐÍµÄÐÅÏ¢
+        retInt = GetDiagnosisSituationInfo(fp, res); // ï¿½ï¿½È¡ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½Ï¢
         if (retInt != LEGAL_DATA) {
             flag = 1; if (retInt == FILE_END)break;
         }
-        fscanf(fp, "%s", cache);  // ¶ÁÈ¡½áÊø·û
-        if (!IsEnd(cache)) {  // ¸Ã¼ÇÂ¼ÈÔÎ´ÖÕÖ¹,È·±£¶ÁÍê½áÊø·û,ÒÔÃâÓ°ÏìÏÂ¸ö¼ÇÂ¼
+        fscanf(fp, "%s", cache);  // ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        if (!IsEnd(cache)) {  // ï¿½Ã¼ï¿½Â¼ï¿½ï¿½Î´ï¿½ï¿½Ö¹,È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Ó°ï¿½ï¿½ï¿½Â¸ï¿½ï¿½ï¿½Â¼
             while (!feof(fp) && !IsEnd(cache))fscanf(fp, "%s", cache);
             flag = 1;
         }
         break;
     }
-    if (flag) { // ÔÚ´Ë´¦²¹³äÉ¾³ýÁ´±í
+    if (flag) { // ï¿½Ú´Ë´ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         free(res);
         res = NULL;
     }

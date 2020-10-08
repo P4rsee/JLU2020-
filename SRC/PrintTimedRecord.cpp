@@ -9,7 +9,7 @@ void PrintTimedRecord(int m1, int d1, int h1, int f1, int m2, int d2, int h2, in
     }
     while (!feof(fp)) {
         DiagnosisRecord* nowRecord = InRecord(fp);
-        TimeRecord* tmp = &nowRecord->recordTime;
+        TimeRecord* tmp = &nowRecord->TimeRecord;
         if (tmp->month<m1 || tmp->month>m2)continue;
         if (tmp->month == m1 && tmp->day < d1)continue;
         if (tmp->month == m2 && tmp->day > d2)continue;
@@ -26,6 +26,15 @@ void PrintTimedRecord(int m1, int d1, int h1, int f1, int m2, int d2, int h2, in
     //输出到界面操作
 }
 
+typedef struct Ward {
+    int wardId;
+    int nursingType;
+    int bedType;
+    int totalBedNum;
+    int ocuupiedBedNum;
+    bool bedSituation[10];
+    Ward* next;
+};
 
 int IsWardId(const char* str) {
     return 1;
@@ -79,7 +88,7 @@ Ward* InWard(FILE* fp) {
         }
         fscanf(fp, "%s", cache);
         if (IsNumber(cache)) {
-            res->occupiedBedNum = atoi(cache);
+            res->ocuupiedBedNum = atoi(cache);
         }
         else {
             flag = 1; if (IsEnd(cache))break;

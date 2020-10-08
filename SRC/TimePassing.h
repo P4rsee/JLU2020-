@@ -1,7 +1,9 @@
+#pragma once
 #include "DiagnosisMessage.h"
 #include <stdlib.h>
 
-int actualExpense(TimeRecord startDate, TimeRecord endDate);
+
+int actualExpense(TimeRecord startDate, TimeRecord endDate, int bedtype, int nursingtype);
 
 SingleCost getTotalCost(DiagnosisRecord *head);
 
