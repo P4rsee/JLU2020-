@@ -60,6 +60,9 @@ void drawTiming(){
 		{
 			//点击了确认
 			if (m.uMsg == WM_LBUTTONDOWN) {
+				if (temp.month > currentTime.month){
+					ClearBusyDegree();
+				}
 				timePass(InHospitalHead, thirty_days, day, hour, minute);	//流逝
 				int cnt = sortInHospitalList(InHospitalHead);				//需要交押金病人数
 				drawPatientToDeposit(cnt);									//打印该交押金的住院病人			

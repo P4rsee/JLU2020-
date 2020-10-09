@@ -417,7 +417,7 @@ void drawToHandDeposit()
 				char buf[8];
 				InputBox(buf, 8, "请输入7位挂号号码");
 				res = findModifiedNode(DiagnosisRecordHead, atoi(buf));
-				if (res) { 
+				if (res) {
 					clearrectangle(150, 50, 290, 280);				//刷新显示区域
 					outtextxy(150, 50, buf);
 					outtextxy(150, 80, res->patientInfo.name);		//患者姓名
@@ -426,11 +426,11 @@ void drawToHandDeposit()
 					outtextxy(150, 110, buf_age);					//患者年龄
 					outtextxy(150, 140, res->doctorInfo.name);		//医生姓名
 					char buf_leval[2];
-					itoa(res->doctorInfo.level, buf_leval, 10);		//医生级别
-					outtextxy(150, 170, doctorType[res->doctorInfo.level]);					
+					itoa(res->doctorInfo.level, buf_leval, 10);
+					outtextxy(150, 170, doctorType[res->doctorInfo.level]);					//医生级别
 					char buf_section[3];
-					itoa(res->doctorInfo.sectionId, buf_section, 10);//医生科室
-					outtextxy(150, 200, doctorSection[res->doctorInfo.sectionId]);			
+					itoa(res->doctorInfo.sectionId, buf_section, 10);
+					outtextxy(150, 200, buf_section);				//医生科室
 					char buf_Doctorid[6];
 					itoa(res->doctorInfo.id, buf_Doctorid, 10);
 					outtextxy(150, 230, buf_Doctorid);				//医生工号
@@ -562,11 +562,7 @@ void drawOutHospital() {
 			if (m.uMsg == WM_LBUTTONDOWN) {
 				char buf[8];
 				InputBox(buf, 8, "请输入7位挂号号码");
-				//res = queryDiagnosisByRegisterId(DiagnosisRecord* head, *int* registerId);
-				//if (NULL != res && -1 != res->diagnosisSituation.setFlag) {		//找到合法的node
-				if (IsRegisterId(buf)) { //测试
-					//res = (DiagnosisRecord*)malloc(sizeof(DiagnosisRecord));		//测试
-					//InitDiagosisRecord(res);										//只初始化到setFlag
+				if (IsRegisterId(buf)) { //测试					
 					DiagnosisRecord* res =
 						findModifiedNode(DiagnosisRecordHead, atoi(buf));
 					clearrectangle(150, 50, 290, 280);				//刷新显示区域
@@ -578,7 +574,7 @@ void drawOutHospital() {
 					outtextxy(150, 140, res->doctorInfo.name);	//医生姓名
 					char buf_leval[2];
 					itoa(res->doctorInfo.level, buf_leval, 10);
-					outtextxy(150, 170, buf_leval);				//医生级别
+					outtextxy(150, 170, doctorType[res->doctorInfo.level]);		//医生级别
 					char buf_section[3];
 					itoa(res->doctorInfo.sectionId, buf_section, 10);
 					outtextxy(150, 200, buf_section);				//医生科室
@@ -741,7 +737,7 @@ void drawToHospital() {
 					outtextxy(150, 140, res->doctorInfo.name);			//医生姓名
 					char buf_leval[2];
 					itoa(res->doctorInfo.level, buf_leval, 10);
-					outtextxy(150, 170, buf_leval);						//医生级别
+					outtextxy(150, 170, doctorType[res->doctorInfo.level]);	//医生级别
 					char buf_section[3];
 					itoa(res->doctorInfo.sectionId, buf_section, 10);
 					outtextxy(150, 200, buf_section);					//医生科室
@@ -905,7 +901,7 @@ void drawToCheck() {
 						outtextxy(150, 140, res->doctorInfo.name);	//医生姓名
 						char buf_leval[2];
 						itoa(res->doctorInfo.level, buf_leval, 10);
-						outtextxy(150, 170, buf_leval);				//医生级别
+						outtextxy(150, 170, doctorType[res->doctorInfo.level]);	//医生级别
 						char buf_section[3];
 						itoa(res->doctorInfo.sectionId, buf_section, 10);
 						outtextxy(150, 200, buf_section);				//医生科室
@@ -1068,7 +1064,7 @@ void drawToPrescribe() {
 					outtextxy(150, 140, res->doctorInfo.name);	//医生姓名
 					char buf_leval[2];
 					itoa(res->doctorInfo.level, buf_leval, 10);
-					outtextxy(150, 170, buf_leval);				//医生级别
+					outtextxy(150, 170, doctorType[res->doctorInfo.level]);	//医生级别
 					char buf_section[3];
 					itoa(res->doctorInfo.sectionId, buf_section, 10);
 					outtextxy(150, 200, buf_section);				//医生科室

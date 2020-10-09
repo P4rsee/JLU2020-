@@ -55,3 +55,22 @@ void DoctorNodePushUp(int passDay) {
 		nowNode = nowNode->next;
 	}
 }
+
+void ClearBusyDegree() {
+	DoctorNode* nowNode = DoctorHead->next;
+	while (nowNode != NULL) {
+		nowNode->doctorInfo.busyDegree = 0;
+		nowNode = nowNode->next;
+	}
+}
+
+void AddBusyDegree(int docId, int val) {
+	DoctorNode* nowNode = DoctorHead->next;
+	while (nowNode != NULL) {
+		if (nowNode->doctorInfo.id == docId) {
+			nowNode->doctorInfo.busyDegree += val;
+			break;
+		}
+		nowNode = nowNode->next;
+	}
+}

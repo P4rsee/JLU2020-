@@ -33,3 +33,7 @@ extern int drugPriceList[31];
 extern int checkPriceList[31];
 extern char nursingType[3][8];
 extern char bedType[4][8];
+
+void ClearBusyDegree(); 
+
+void AddBusyDegree(int docId, int val);

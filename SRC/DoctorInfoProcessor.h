@@ -6,6 +6,6 @@ void generateRegisterID(DiagnosisRecord*);
 DoctorNode* getRecommendedDoctors(DoctorNode*, int);
 
 void combineDoctorIntoDiagnosisRecord(DiagnosisRecord* head,
-  DiagnosisRecord *currentRecordPtr, DoctorNode* newDoctorPtr);
+	DiagnosisRecord *currentRecordPtr, DoctorNode* newDoctorPtr);
 
 DoctorNode* doctorRecommendedMergeSort(DoctorNode*);

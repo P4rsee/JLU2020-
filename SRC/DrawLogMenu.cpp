@@ -2,96 +2,96 @@
 #include"DrawMunu.h"
 #include"DiagnosisMessage.h"
 #include"global.h"
-void drawLogMenu() {  //Ò»ï¿½ï¿½ï¿½Ó½ï¿½ï¿½ï¿½--ï¿½ï¿½ï¿½Æ¼ï¿½Â¼
+void drawLogMenu() {  //Ò»¼¶×Ó½çÃæ--ÕïÁÆ¼ÇÂ¼
 abcd:;
-    MOUSEMSG m;
-    initgraph(800, 600);
-    setbkcolor(WHITE);
-    cleardevice();
-    setfillcolor(LIGHTBLUE);
+	MOUSEMSG m;
+	initgraph(800, 600);
+	setbkcolor(WHITE);
+	cleardevice();
+	setfillcolor(LIGHTBLUE);
 
-    fillrectangle(200, 140, 600, 160);
-    fillrectangle(200, 200, 600, 220);
-    fillrectangle(200, 260, 600, 280);
-    fillrectangle(200, 320, 600, 340);
-    fillrectangle(200, 380, 600, 400);
+	fillrectangle(200, 140, 600, 160);
+	fillrectangle(200, 200, 600, 220);
+	fillrectangle(200, 260, 600, 280);
+	fillrectangle(200, 320, 600, 340);
+	fillrectangle(200, 380, 600, 400);
 
-    settextstyle(15, 0, "ï¿½ï¿½ï¿½ï¿½");//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½Ð¡ ï¿½ï¿½Ê½ 
-    setbkmode(TRANSPARENT);// È¥ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½
-    outtextxy(250, 142, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½Â¼");
-    outtextxy(250, 202, "ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½Æ¼ï¿½Â¼");
-    outtextxy(250, 262, "É¾ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½Â¼");
-    outtextxy(250, 322, "ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½Â¼");
-    outtextxy(260, 382, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½");
-    while (1) {
-        m = GetMouseMsg();
-        if (m.x >= 200 && m.x <= 600 && m.y >= 140 && m.y <= 160) {//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-            setlinecolor(RED);//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ÂµÄ±ß¿ï¿½Îªï¿½ï¿½É«
-            rectangle(190, 135, 610, 165);//ï¿½ï¿½ï¿½ÂµÄ±ß¿ï¿½
-            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½Â¼
-            if (m.uMsg == WM_LBUTTONDOWN) {
-                drawAddLogRecord();
-                goto abcd;//ï¿½ï¿½ï¿½ï¿½Êµï¿½Öºï¿½ ï¿½ï¿½×ªï¿½ï¿½ ï¿½î¿ªÍ·
-            }
-        }
-        else if (m.x >= 200 && m.x <= 600 && m.y >= 200 && m.y <= 220) {
-            setlinecolor(RED);
-            rectangle(190, 195, 610, 225);
-            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë²ï¿½Ñ¯ï¿½ï¿½ï¿½Æ¼ï¿½Â¼
-            if (m.uMsg == WM_LBUTTONDOWN) {
-                drawSearchMenu();
-                goto abcd;
-            }
-        }
-        else if (m.x >= 200 && m.x <= 600 && m.y >= 260 && m.y <= 280) {
-            setlinecolor(RED);
-            rectangle(190, 255, 610, 285);
-            //ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½Â¼
-            if (m.uMsg == WM_LBUTTONDOWN) {
-                //ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½É¾
-                char buf[8];
-                InputBox(buf, 8, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½7Î»ï¿½ï¿½ï¿½Æ¼ï¿½Â¼ï¿½ï¿½ï¿½");
-                if (IsRegisterId(buf)) {
-                    if (deleteDiagnosisList(DiagnosisRecordHead, atoi(buf))) {
-                        InputBox(buf, 2, "É¾ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
-                    }
-                    else {
-                        InputBox(buf, 2, "É¾ï¿½ï¿½Ê§ï¿½Ü£ï¿½Ã»ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½Â¼");
-                    }
-                }
-                //ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Ê±ï¿½ï¿½Boxï¿½ï¿½ï¿½ï¿½
-                break;
-            }
-
-
-        }
-        else if (m.x >= 200 && m.x <= 600 && m.y >= 320 && m.y <= 340) {
-            setlinecolor(RED);
-            rectangle(190, 315, 610, 345);
-            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½Â¼
-            if (m.uMsg == WM_LBUTTONDOWN) {
-                drawUpdateMenu();
-                goto abcd;
-            }
-        }
-        else if (m.x >= 200 && m.x <= 600 && m.y >= 380 && m.y <= 400) {
-            setlinecolor(RED);
-            rectangle(190, 375, 610, 405);
-            //ï¿½ï¿½ï¿½ï¿½Ë·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½
-            if (m.uMsg == WM_LBUTTONDOWN) {
-
-                return;
-            }
+	settextstyle(15, 0, "¿¬Ìå");//ÉèÖÃÎÄ×Ö´óÐ¡ ¸ñÊ½ 
+	setbkmode(TRANSPARENT);// È¥µôÎÄ×Ö±³¾°
+	outtextxy(250, 142, "Ôö¼ÓÕïÁÆ¼ÇÂ¼");
+	outtextxy(250, 202, "²éÑ¯ÕïÁÆ¼ÇÂ¼");
+	outtextxy(250, 262, "É¾³ýÕïÁÆ¼ÇÂ¼");
+	outtextxy(250, 322, "ÐÞ¸ÄÕïÁÆ¼ÇÂ¼");
+	outtextxy(260, 382, "·µ»ØÖ÷²Ëµ¥");
+	while (1) {
+		m = GetMouseMsg();
+		if (m.x >= 200 && m.x <= 600 && m.y >= 140 && m.y <= 160) {//¼ì²âÊó±êµÄÎ»ÖÃ ÊÇ·ñÂú×ãÌõ¼þ
+			setlinecolor(RED);//Âú×ãºó ÉèÖÃÐÂµÄ±ß¿òÎªºìÉ«
+			rectangle(190, 135, 610, 165);//»­ÐÂµÄ±ß¿ò
+			//Èç¹ûµã»÷ÁË Ôö¼ÓÕïÁÆ¼ÇÂ¼
+			if (m.uMsg == WM_LBUTTONDOWN) {
+				drawAddLogRecord();
+				goto abcd;//¹¦ÄÜÊµÏÖºó Ìø×ªµ½ ×î¿ªÍ·
+			}
+		}
+		else if (m.x >= 200 && m.x <= 600 && m.y >= 200 && m.y <= 220) {
+			setlinecolor(RED);
+			rectangle(190, 195, 610, 225);
+			//Èç¹ûµã»÷ÁË²éÑ¯ÕïÁÆ¼ÇÂ¼
+			if (m.uMsg == WM_LBUTTONDOWN) {
+				drawSearchMenu();
+				goto abcd;
+			}
+		}
+		else if (m.x >= 200 && m.x <= 600 && m.y >= 260 && m.y <= 280) {
+			setlinecolor(RED);
+			rectangle(190, 255, 610, 285);
+			//µã»÷ÁËÉ¾³ýÕïÁÆ¼ÇÂ¼
+			if (m.uMsg == WM_LBUTTONDOWN) {
+				//ÊäÈëÖ±½ÓÉ¾
+				char buf[8];
+				InputBox(buf, 8, "ÇëÊäÈë7Î»ÕïÁÆ¼ÇÂ¼±àºÅ");
+				if (IsRegisterId(buf)) {
+					if (deleteDiagnosisList(DiagnosisRecordHead, atoi(buf))) {
+						InputBox(buf, 2, "É¾³ý³É¹¦£¬Çë¼ÌÐø");
+					}
+					else {
+						InputBox(buf, 2, "É¾³ýÊ§°Ü£¬Ã»ÓÐÕÒµ½¼ÇÂ¼");
+					}
+				}
+				//µ¯Ò»¸ö·´À¡´°¿Ú,ÔÝÊ±ÓÃBox´úÌæ
+				break;
+			}
 
 
-        }
-        else {
-            setlinecolor(WHITE);
-            rectangle(190, 135, 610, 165);
-            rectangle(190, 195, 610, 225);
-            rectangle(190, 255, 610, 285);
-            rectangle(190, 315, 610, 345);
-            rectangle(190, 375, 610, 405);
-        }
-    }
+		}
+		else if (m.x >= 200 && m.x <= 600 && m.y >= 320 && m.y <= 340) {
+			setlinecolor(RED);
+			rectangle(190, 315, 610, 345);
+			//µã»÷ÁËÐÞ¸ÄÕïÁÆ¼ÇÂ¼
+			if (m.uMsg == WM_LBUTTONDOWN) {
+				drawUpdateMenu();
+				goto abcd;
+			}
+		}
+		else if (m.x >= 200 && m.x <= 600 && m.y >= 380 && m.y <= 400) {
+			setlinecolor(RED);
+			rectangle(190, 375, 610, 405);
+			//µã»÷ÁË·µ»ØÖ÷²Ëµ¥
+			if (m.uMsg == WM_LBUTTONDOWN) {
+
+				return;
+			}
+
+
+		}
+		else {
+			setlinecolor(WHITE);
+			rectangle(190, 135, 610, 165);
+			rectangle(190, 195, 610, 225);
+			rectangle(190, 255, 610, 285);
+			rectangle(190, 315, 610, 345);
+			rectangle(190, 375, 610, 405);
+		}
+	}
 }

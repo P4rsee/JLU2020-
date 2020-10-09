@@ -69,7 +69,7 @@ bool deleteDiagnosisList(DiagnosisRecord *head, int queryId) {
 			return true;
 		}
 		tempPtr = tempPtr->next;
-		prePtr = tempPtr->next;
+		prePtr = prePtr->next;
 	}
 	return false;
 }
@@ -249,6 +249,7 @@ int sortInHospitalList(DiagnosisRecord* InHospitalHead) {
 	DiagnosisRecord * resPtr = InHospitalHead;
 	int cnt = 0;
 	while (tempPtr != NULL){
+		/*tempPtr->patientInfo.registerId==1006007*/
 		if (tempPtr->diagnosisSituation.diagnosisSituationInfo
 			.inHospitalRecord.deposit.yuan < 1000
 			&& InHospitalHead->next != tempPtr){
@@ -261,7 +262,9 @@ int sortInHospitalList(DiagnosisRecord* InHospitalHead) {
 			
 		}
 		else{
-			if (InHospitalHead->next == tempPtr)cnt++;
+			if (InHospitalHead->next == tempPtr
+				&& tempPtr->diagnosisSituation.diagnosisSituationInfo
+				.inHospitalRecord.deposit.yuan < 1000)cnt++;
 			tempPtr = tempPtr->next;
 			resPtr = resPtr->next;
 		}
